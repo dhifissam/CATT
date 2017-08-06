@@ -1,0 +1,31 @@
+{% extends ":vehicule:list.html.twig" %}
+{% block title %}Vehicules{% endblock %}
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="#">{% if vehicule.id is null %}Ajout{% else %}Modif{% endif %}</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="row">
+         <div class="col-md-12">
+             {{ form_start(form) }}
+             <div class="panel panel-flat">
+                 <div class="panel-body">
+                     <div class="row">
+                         {{ forms.input("col-md-3","Matricule",form.matricule) }}
+                         {{ forms.input("col-md-3","Marque",form.marque) }}
+                         {{ forms.input("col-md-3","Num Chassit",form.numChassit) }}
+                         {{ forms.input("col-md-3","Nbr cheveaux",form.nbrCheveaux) }}
+                     </div>
+                     <div class="row">
+                         {{ forms.checkbox("col-md-4","Enable",form.enable) }}
+                     </div>
+                     {{ buttons.submitForm() }}
+                 </div>
+             </div>
+             {{ form_end(form) }}
+         </div>
+     </div>
+ {% endblock %}
+{% block javascripts %}
+    {{ scripts.form() }}
+{% endblock %}

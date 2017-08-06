@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+{% block title %}Utilisateurs{% endblock %}
+{% block breadcrumb %}
+    <li><a href="{{ path('user_list') }}">Utilisateurs</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="panel panel-body">
+         <div class="panel-heading">
+             {{ buttons.addItem("Nouveau utilisateur",path("user_form")) }}
+         </div>
+         <table class="table" id="myTable">
+             <thead>
+             <tr>
+                 <th>#</th>
+                 <th>Username</th>
+                 <th>Email</th>
+                 <th>Nom & prénom</th>
+                 <th>Roles</th>
+                 <th>Status</th>
+                 <th>Actions</th>
+             </tr>
+             </thead>
+         </table>
+     </div>
+ {% endblock %}
+{% block javascripts %}
+    {{ scripts.dataTable("user_list",'{data: "id"},{data: "username"},{data: "email"},{data: "fullName"},{data: "roles", orderable: false},{data: "status", orderable: false},{data: "actions", orderable: false,width:"10%"}') }}
+{% endblock %}

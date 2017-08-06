@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+{% block title %}Chaffeurs{% endblock %}
+{% block breadcrumb %}
+    <li><a href="{{ path('chauffeur_list') }}">Chaffeurs</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="panel panel-body">
+         <div class="panel-heading">
+             {{ buttons.addItem("Nouveau chauffeur",path("chauffeur_form")) }}
+         </div>
+         <table class="table" id="myTable">
+             <thead>
+             <tr>
+                 <th>#</th>
+                 <th>Nom</th>
+                 <th>Prenom</th>
+                 <th>Date de naissance</th>
+                 <th>Matricule</th>
+                 <th>Tel 1 </th>
+                 <th>Tel 2 </th>
+                 <th>Adresse</th>
+                 <th>Enable</th>
+                 <th>Action</th>
+             </tr>
+             </thead>
+             <tbody>
+             {% for chaffeur in chaffeurs %}
+                 <tr>
+                     <td>{{ chaffeur.id }}</td>
+                     <td>{{ chaffeur.nom }}</td>
+                     <td>{{ chaffeur.prenom }}</td>
+                     <td>{{ chaffeur.naissance|date('d/m/Y') }}</td>
+                     <td>{{ chaffeur.matricule }}</td>
+                     <td>{{ chaffeur.tel }}</td>
+                     <td>{{ chaffeur.tel2 }}</td>
+                     <td>{{ chaffeur.adresse }}</td>
+                     <td>
+                         {% if chaffeur.enable %}
+                             <span class="label label-success" >Enable</span>
+                         {% else %}
+                             <span class="label label-danger">Disable</span>
+                         {% endif %}
+                     </td>
+                     <td>
+                         <ul class="icons-list">
+                             <li>{{ buttons.updateAction(path("chauffeur_form",{id:chaffeur.id})) }}</li>
+                             <li>{{ buttons.redirectAction(path("chauffeur_delete",{id:chaffeur.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer ce chauffeur') }}</li>
+                         </ul>
+                     </td>
+                 </tr>
+             {% endfor %}
+             </tbody>
+         </table>
+     </div>
+ {% endblock %}

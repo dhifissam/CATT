@@ -1,0 +1,36 @@
+{% extends ":chauffeur:list.html.twig" %}
+{% block title %}Chauffeurs{% endblock %}
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="#">Form</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="row">
+         <div class="col-md-12">
+             {{ form_start(form) }}
+             <div class="panel panel-flat">
+                 <div class="panel-body">
+                     <div class="row">
+                         {{ forms.input("col-md-3","Nom",form.nom) }}
+                         {{ forms.input("col-md-3","Prenom",form.prenom) }}
+                         {{ forms.input("col-md-3","Naissance",form.naissance) }}
+                         {{ forms.input("col-md-3","Matricule",form.matricule) }}
+                     </div>
+                     <div class="row">
+                         {{ forms.input("col-md-4","Tel 1",form.tel) }}
+                         {{ forms.input("col-md-4","Tel 2",form.tel2) }}
+                         {{ forms.input("col-md-4","Adresse",form.adresse) }}
+                     </div>
+                     <div class="row">
+                         {{ forms.checkbox("col-md-4","Enable",form.enable) }}
+                     </div>
+                     {{ buttons.submitForm() }}
+                 </div>
+             </div>
+             {{ form_end(form) }}
+         </div>
+     </div>
+ {% endblock %}
+{% block javascripts %}
+    {{ scripts.form() }}
+{% endblock %}

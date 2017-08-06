@@ -1,0 +1,7 @@
+parameters:
+    brochures_directory: '%kernel.root_dir%/../web/uploads'
+
+services:
+    datatable.service:
+        class: AppBundle\Service\DataTableService
+        arguments: [ '@doctrine.orm.entity_manager','@request_stack' ]

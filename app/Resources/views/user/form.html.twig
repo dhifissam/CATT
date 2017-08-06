@@ -1,0 +1,39 @@
+{% extends ":user:list.html.twig" %}
+{% block title %}Utilisateurs{% endblock %}
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="#">{% if user.id is null %}Ajout{% else %}Modif{% endif %}</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="row">
+         <div class="col-md-12">
+             {{ form_start(form) }}
+             <div class="panel panel-flat">
+                 <div class="panel-body">
+                     <div class="row">
+                         {{ forms.input("col-md-3","Nom d'utilisateur",form.username) }}
+                         {{ forms.input("col-md-3","Email",form.email) }}
+                         {{ forms.input("col-md-3","Nom & Prénom",form.fullName) }}
+                         {{ forms.input("col-md-3","Roles",form.roles) }}
+                     </div>
+                     {% if  user.id is null %}
+                         <div class="row">
+                             {{ forms.input("col-md-3","Password",form.plainPassword.first) }}
+                         </div>
+                         <div class="row">
+                             {{ forms.input("col-md-3","Password Confirmation",form.plainPassword.second) }}
+                         </div>
+                     {% endif %}
+                     <div class="row">
+                         {{ forms.checkbox("col-md-3","Enabled",form.enabled) }}
+                     </div>
+                     {{ buttons.submitForm() }}
+                 </div>
+             </div>
+             {{ form_end(form) }}
+         </div>
+     </div>
+ {% endblock %}
+{% block javascripts %}
+    {{ scripts.form() }}
+{% endblock %}

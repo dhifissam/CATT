@@ -1,0 +1,73 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Mission
+ *
+ * @ORM\Table(name="mission")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MissionRepository")
+ */
+class Mission
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="etat", type="integer")
+     */
+    private $etat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prix", type="decimal", precision=10, scale=3)
+     */
+    private $prix;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_creation", type="datetime")
+     */
+    private $dateCreation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     */
+    private $user;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     */
+    private $validateur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Chauffeur")
+     */
+    private $chauffeur;
+
+    public function __construct()
+    {
+
+        $this->etat =1;
+        $this->dateCreation =new \DateTime();
+    }
+
+
+}

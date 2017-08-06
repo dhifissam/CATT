@@ -1,0 +1,53 @@
+{% extends ":vehicule:form.html.twig" %}
+{% block title %}Vehicules Chauffeurs{% endblock %}
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="#">Chauffeurs</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="row">
+         <div class="col-md-12">
+             {{ form_start(form) }}
+             <div class="panel panel-flat">
+                 <div class="panel-body">
+                     <div class="row">
+                         {{ forms.input("col-md-3","Date Occupation",form.dateOccupation) }}
+                         {{ forms.input("col-md-3","Chaffeur",form.chauffeur) }}
+                     </div>
+                     {{ buttons.submitForm() }}
+                 </div>
+             </div>
+             {{ form_end(form) }}
+         </div>
+     </div>
+     <div class="row">
+         <div class="panel panel-body">
+             <table class="table" id="myTable">
+                 <thead>
+                 <tr>
+                     <th>Date</th>
+                     <th>Chauffeurs</th>
+                     <th>Action</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+                 {% for vehiculeOccupation  in vehicule.vehiculeOccupations %}
+                     <tr>
+                         <td>{{ vehiculeOccupation.dateOccupation|date('d/m/Y H:i') }}</td>
+                         <td>{{ vehiculeOccupation.chauffeur }}</td>
+                         <td>
+                             <ul class="icons-list">
+                                 <li>{{ buttons.updateAction(path("vehicule_form_chauffeurs",{id:vehicule.id, id2:vehiculeOccupation.id})) }}</li>
+                                 <li>{{ buttons.redirectAction(path("vehicule_chauffeur_delete",{id:vehiculeOccupation.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer ce chauffeur') }}</li>
+                             </ul>
+                         </td>
+                     </tr>
+                 {% endfor %}
+                 </tbody>
+             </table>
+         </div>
+     </div>
+ {% endblock %}
+{% block javascripts %}
+    {{ scripts.form() }}
+{% endblock %}

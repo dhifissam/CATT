@@ -1,0 +1,62 @@
+{% macro input(class,label,from,smallText=null) %}
+    <div class="{{ class }}">
+        <div class="form-group">
+            {% if label is not null %}
+                <label class="control-label">
+                    {{ label|raw }}
+                </label>
+            {% endif %}
+            {{ form_widget(from,{attr:{class:"form-control"}}) | raw }}
+            {{ form_errors(from) | raw }}
+            {% if smallText is not null %}
+                <small>{{ smallText }}</small>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro mask(class,label,from,mask,smallText=null) %}
+    <div class="{{ class }}">
+        <div class="form-group">
+            {% if label is not null %}
+                <label class="control-label">
+                    {{ label|raw }}
+                </label>
+            {% endif %}
+            {{ form_widget(from,{attr:{"class":"form-control","data-mask":mask}}) | raw }}
+            {{ form_errors(from) | raw }}
+            {% if smallText is not null %}
+                <small>{{ smallText }}</small>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro wisyhtml5(class,label,from,smallText=null) %}
+    <div class="{{ class }}">
+        <div class="form-group">
+            {% if label is not null %}
+                <label class="control-label">
+                    {{ label|raw }}
+                </label>
+            {% endif %}
+            {{ form_widget(from,{attr:{rows:80,cols:50,class:"wysihtml5 wysihtml5-min form-control"}}) | raw }}
+            {{ form_errors(from) | raw }}
+            {% if smallText is not null %}
+                <small>{{ smallText }}</small>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro checkbox(class,label,from,smallText=null) %}
+    <div class="{{ class }}">
+        <div class="checkbox" style="margin-top:10px;">
+            <label>
+                {{ form_widget(from,{attr:{class:"styled"}}) | raw }}
+                {{ label|raw }}
+            </label>
+            {{ form_errors(from) | raw }}
+        </div>
+    </div>
+{% endmacro %}

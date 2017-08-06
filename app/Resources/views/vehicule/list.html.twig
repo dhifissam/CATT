@@ -1,0 +1,53 @@
+{% extends "base.html.twig" %}
+{% block title %}Vehicules{% endblock %}
+{% block breadcrumb %}
+    <li><a href="{{ path('vehicule_list') }}">Vehicules</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="panel panel-body">
+         <div class="panel-heading">
+             {{ buttons.addItem("Nouveau vehicule",path("vehicule_form")) }}
+         </div>
+         <table class="table" id="myTable">
+             <thead>
+             <tr>
+                 <th>#</th>
+                 <th>Matricule</th>
+                 <th>Marque</th>
+                 <th>Num Chassit</th>
+                 <th>Nbr cheveaux</th>
+                 <th>Chauffeur</th>
+                 <th>Enable</th>
+                 <th>Action</th>
+             </tr>
+             </thead>
+             <tbody>
+             {% for vehicule in vehicules %}
+                 <tr>
+                     <td>{{ vehicule.id }}</td>
+                     <td>{{ vehicule.matricule }}</td>
+                     <td>{{ vehicule.marque }}</td>
+                     <td>{{ vehicule.numChassit }}</td>
+                     <td>{{ vehicule.nbrCheveaux }}</td>
+                     <td>{{ vehicule.chauffeur }}</td>
+                     <td>
+                         {% if vehicule.enable %}
+                             <span class="label label-success" >Enable</span>
+                         {% else %}
+                             <span class="label label-danger">Disable</span>
+                         {% endif %}
+                     </td>
+                     <td>
+                         <ul class="icons-list">
+                             <li>{{ buttons.updateAction(path("vehicule_form",{id:vehicule.id})) }}</li>
+                             <li>{{ buttons.redirectAction(path("vehicule_delete",{id:vehicule.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer cette vehicule') }}</li>
+                             <li>{{ buttons.redirectAction(path("vehicule_form_chauffeurs",{id:vehicule.id}),"icon-users",null) }}</li>
+                             <li>{{ buttons.redirectAction(path("vehicule_form_carburants",{id:vehicule.id}),"icon-file-spreadsheet2",null) }}</li>
+                         </ul>
+                     </td>
+                 </tr>
+             {% endfor %}
+             </tbody>
+         </table>
+     </div>
+ {% endblock %}

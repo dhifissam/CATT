@@ -1,0 +1,257 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * vehicule
+ *
+ * @ORM\Table(name="vehicule")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\VehiculeRepository")
+ */
+class Vehicule
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="matricule", type="string", length=255)
+     */
+    private $matricule;
+    
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="marque", type="string", length=255)
+     */
+    private $marque;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="num_chassit", type="string", length=255)
+     */
+    private $numChassit;
+
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nbr_cheveaux", type="integer")
+     */
+    private $nbrCheveaux  ;
+
+
+    /**
+     * @ORM\Column(name="enable", type="boolean")
+     */
+    private $enable;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\VehiculeOccupation",mappedBy="vehicule")
+     * @ORM\OrderBy({"dateOccupation" ="DESC"})
+     */
+    private $vehiculeOccupations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Carburant",mappedBy="vehicule")
+     * @ORM\OrderBy({"dateBon" ="DESC"})
+     */
+    private $carburants;
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set matricule
+     *
+     * @param string $matricule
+     *
+     * @return Vehicule
+     */
+    public function setMatricule($matricule)
+    {
+        $this->matricule = $matricule;
+
+        return $this;
+    }
+
+    /**
+     * Get matricule
+     *
+     * @return string
+     */
+    public function getMatricule()
+    {
+        return $this->matricule;
+    }
+
+    /**
+     * Set marque
+     *
+     * @param string $marque
+     *
+     * @return Vehicule
+     */
+    public function setMarque($marque)
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    /**
+     * Get marque
+     *
+     * @return string
+     */
+    public function getMarque()
+    {
+        return $this->marque;
+    }
+
+    /**
+     * Set numChassit
+     *
+     * @param string $numChassit
+     *
+     * @return Vehicule
+     */
+    public function setNumChassit($numChassit)
+    {
+        $this->numChassit = $numChassit;
+
+        return $this;
+    }
+
+    /**
+     * Get numChassit
+     *
+     * @return string
+     */
+    public function getNumChassit()
+    {
+        return $this->numChassit;
+    }
+
+    /**
+     * Set nbrCheveaux
+     *
+     * @param integer $nbrCheveaux
+     *
+     * @return Vehicule
+     */
+    public function setNbrCheveaux($nbrCheveaux)
+    {
+        $this->nbrCheveaux = $nbrCheveaux;
+
+        return $this;
+    }
+
+    /**
+     * Get nbrCheveaux
+     *
+     * @return integer
+     */
+    public function getNbrCheveaux()
+    {
+        return $this->nbrCheveaux;
+    }
+
+    /**
+     * Set enable
+     *
+     * @param boolean $enable
+     *
+     * @return Vehicule
+     */
+    public function setEnable($enable)
+    {
+        $this->enable = $enable;
+
+        return $this;
+    }
+
+    /**
+     * Get enable
+     *
+     * @return boolean
+     */
+    public function getEnable()
+    {
+        return $this->enable;
+    }
+
+    /**
+     * Add vehiculeOccupation
+     *
+     * @param \AppBundle\Entity\VehiculeOccupation $vehiculeOccupation
+     *
+     * @return Vehicule
+     */
+    public function addVehiculeOccupation(\AppBundle\Entity\VehiculeOccupation $vehiculeOccupation)
+    {
+        $this->vehiculeOccupations[] = $vehiculeOccupation;
+
+        return $this;
+    }
+
+    /**
+     * Remove vehiculeOccupation
+     *
+     * @param \AppBundle\Entity\VehiculeOccupation $vehiculeOccupation
+     */
+    public function removeVehiculeOccupation(\AppBundle\Entity\VehiculeOccupation $vehiculeOccupation)
+    {
+        $this->vehiculeOccupations->removeElement($vehiculeOccupation);
+    }
+
+    /**
+     * Get vehiculeOccupations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVehiculeOccupations()
+    {
+        return $this->vehiculeOccupations;
+    }
+
+    public function getChauffeur()
+    {
+       if($this->vehiculeOccupations->count()>0)
+           return $this->vehiculeOccupations->first()->getChauffeur();
+       return null;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->enable=true;
+        $this->vehiculeOccupations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public  function  __toString()
+    {
+        return $this->matricule;
+    }
+
+}

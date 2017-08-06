@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CATT</title>
+    <link rel="icon" href="{{ asset('favicon.ico') }}" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="{{ asset('back_template/assets/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('back_template/assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('back_template/assets/css/core.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('back_template/assets/css/components.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('back_template/assets/css/colors.css') }}" rel="stylesheet" type="text/css">
+</head>
+
+<body class="bg-slate-800">
+<div class="page-container login-container">
+    <div class="page-content">
+        <div class="content-wrapper">
+            <div class="content">
+                {#<div>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                        <a href="{{ path('fos_user_security_logout') }}">
+                            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                        </a>
+                    {% else %}
+                        <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                    {% endif %}
+                </div>
+                {% if app.request.hasPreviousSession %}
+                    {% for type, messages in app.session.flashbag.all() %}
+                        {% for message in messages %}
+                            <div class="flash-{{ type }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}#}
+                {% block fos_user_content %}
+                {% endblock fos_user_content %}
+                <div class="footer text-white">
+                    &copy; 2017. <a href="#" class="text-white">CATT</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{% extends ":vehicule:form.html.twig" %}
+{% block title %}Vehicules Carburants{% endblock %}
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="#">Carburants</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="row">
+         <div class="col-md-12">
+             {{ form_start(form) }}
+             <div class="panel panel-flat">
+                 <div class="panel-body">
+                     <div class="row">
+                         {{ forms.input("col-md-3","Date Bon Carburant",form.dateBon) }}
+                         {{ forms.input("col-md-3","kilometrage",form.kilometrage) }}
+                         {{ forms.input("col-md-3","Litre",form.litre) }}
+                         {{ forms.input("col-md-3","Montant",form.montant) }}
+                     </div>
+                     {{ buttons.submitForm() }}
+                 </div>
+             </div>
+             {{ form_end(form) }}
+         </div>
+     </div>
+     <div class="row">
+         <div class="panel panel-body">
+             <table class="table" id="myTable">
+                 <thead>
+                 <tr>
+                     <th>Date Bon Carburant</th>
+                     <th>Kilometrage</th>
+                     <th>Litre</th>
+                     <th>Montant</th>
+                     <th>Action</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+                 {% for carburant  in vehicule.carburants %}
+                     <tr>
+                         <td>{{ carburant.dateBon|date('d/m/Y') }}</td>
+                         <td>{{ carburant.kilometrage}}</td>
+                         <td>{{ carburant.litre }}</td>
+                         <td>{{ carburant.montant }}</td>
+                         <td>
+                             <ul class="icons-list">
+                                 <li>{{ buttons.updateAction(path("vehicule_form_carburants",{id:vehicule.id, id2:carburant.id})) }}</li>
+                                 <li>{{ buttons.redirectAction(path("vehicule_carburant_delete",{id:carburant.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer ce bon') }}</li>
+                             </ul>
+                         </td>
+                     </tr>
+                 {% endfor %}
+                 </tbody>
+             </table>
+         </div>
+     </div>
+ {% endblock %}
+{% block javascripts %}
+    {{ scripts.form() }}
+{% endblock %}

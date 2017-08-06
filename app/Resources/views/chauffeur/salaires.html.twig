@@ -1,0 +1,71 @@
+{% extends ":chauffeur:form.html.twig" %}
+{% block title %}Salaires{% endblock %}
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="#">Salaires</a></li>
+{% endblock %}
+ {% block body %}
+                <div class="row">
+                <div class="col-md-12">
+                    {{ form_start(form) }}
+                    <div class="panel panel-flat">
+                        <div class="panel-body">
+                            <div class="row">
+                                {{ forms.input("col-md-3","Montant",form.montant) }}
+                                {{ forms.input("col-md-3","Nombre de jour Travailler",form.nbrJourTravailer) }}
+                                {{ forms.input("col-md-3","Montant Dejeunee",form.montantDejeuner) }}
+                                {{ forms.input("col-md-3","Montant Dinee",form.monatantDinee) }}
+                                {{ forms.input("col-md-3","Montant Nuitee",form.montantNuitee) }}
+                                {{ forms.input("col-md-3","Heure Supplimantaire 50%",form.heureSupp50) }}
+                                {{ forms.input("col-md-3","Heure Supplimantaire 75%",form.heureSupp75) }}
+                            </div>
+                            {{ buttons.submitForm() }}
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-body">
+                    <table class="table" id="myTable">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Montant</th>
+                            <th>Nombre de Jour Travailler</th>
+                            <th>Montant Dejeunee</th>
+                            <th>Montant Dinee</th>
+                            <th>Montant Nuitee</th>
+                            <th>Heure Supplimantaire 50%</th>
+                            <th>Heure Supplimantaire 75%</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for salaire in salaires %}
+                            <tr>
+                                <td>{{ salaire.id }}</td>
+                                <td>{{ salaire.montant }}</td>
+                                <td>{{ salaire.nbrJourTravailer }}</td>
+                                <td>{{ salaire.montantDejeuner }}</td>
+                                <td>{{ salaire.monatantDinee }}</td>
+                                <td>{{ salaire.montantNuitee }}</td>
+                                <td>{{ salaire.heureSupp50}}</td>
+                                <td>{{ salaire.heureSupp75 }}</td>
+
+                                <td>
+                                    <ul class="icons-list">
+                                        <li>{{ buttons.updateAction(path("chauffeur_form_salaires",{ id:chauffeur.id , id2:salaire.id})) }}</li>
+                                        <li>{{ buttons.redirectAction(path("salaire_delete",{id:salaire.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer ce bon') }}</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endblock %}
+            {% block javascripts %}
+                {{ scripts.form() }}
+            {% endblock %}
