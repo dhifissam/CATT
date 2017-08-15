@@ -1,5 +1,5 @@
 {% extends "base.html.twig" %}
-{% block title %}Chaffeurs{% endblock %}
+{% block title %}Chauffeurs{% endblock %}
 {% block breadcrumb %}
     <li><a href="{{ path('chauffeur_list') }}">Chaffeurs</a></li>
 {% endblock %}
@@ -24,18 +24,18 @@
              </tr>
              </thead>
              <tbody>
-             {% for chaffeur in chaffeurs %}
+             {% for chauffeur in chaffeurs %}
                  <tr>
-                     <td>{{ chaffeur.id }}</td>
-                     <td>{{ chaffeur.nom }}</td>
-                     <td>{{ chaffeur.prenom }}</td>
-                     <td>{{ chaffeur.naissance|date('d/m/Y') }}</td>
-                     <td>{{ chaffeur.matricule }}</td>
-                     <td>{{ chaffeur.tel }}</td>
-                     <td>{{ chaffeur.tel2 }}</td>
-                     <td>{{ chaffeur.adresse }}</td>
+                     <td>{{ chauffeur.id }}</td>
+                     <td>{{ chauffeur.nom }}</td>
+                     <td>{{ chauffeur.prenom }}</td>
+                     <td>{{ chauffeur.naissance|date('d/m/Y') }}</td>
+                     <td>{{ chauffeur.matricule }}</td>
+                     <td>{{ chauffeur.tel }}</td>
+                     <td>{{ chauffeur.tel2 }}</td>
+                     <td>{{ chauffeur.adresse }}</td>
                      <td>
-                         {% if chaffeur.enable %}
+                         {% if chauffeur.enable %}
                              <span class="label label-success" >Enable</span>
                          {% else %}
                              <span class="label label-danger">Disable</span>
@@ -43,8 +43,9 @@
                      </td>
                      <td>
                          <ul class="icons-list">
-                             <li>{{ buttons.updateAction(path("chauffeur_form",{id:chaffeur.id})) }}</li>
-                             <li>{{ buttons.redirectAction(path("chauffeur_delete",{id:chaffeur.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer ce chauffeur') }}</li>
+                             <li>{{ buttons.updateAction(path("chauffeur_form",{id:chauffeur.id})) }}</li>
+                             <li>{{ buttons.redirectAction(path("chauffeur_delete",{id:chauffeur.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer ce chauffeur') }}</li>
+                             <li>{{ buttons.redirectAction(path("chauffeur_form_salaires",{id:chauffeur.id}),"icon-coins",null) }}</li>
                          </ul>
                      </td>
                  </tr>

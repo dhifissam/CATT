@@ -3,10 +3,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Carburant;
+use AppBundle\Entity\Entretient;
 use AppBundle\Entity\Vehicule;
 use AppBundle\Entity\User;
 use AppBundle\Entity\VehiculeOccupation;
 use AppBundle\Form\CarburantType;
+use AppBundle\Form\EntretientType;
 use AppBundle\Form\VehiculeOccupationType;
 use AppBundle\Form\VehiculeType;
 use AppBundle\Form\UserType;
@@ -199,6 +201,64 @@ class VehiculeController extends Controller
         ));
     }
 
+
+
+    /**
+     * @Route("/form/{id}/entretients/{id2}", name="vehicule_form_entretients")
+     */
+    public function indexEntretientAction($id,$id2=null,Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $vehicule = $em->getRepository(Vehicule::class)->find($id);
+        if($id2)
+            $entretient = $em->getRepository(Entretient::class)->find($id2);
+        else
+            $entretient = new Entretient();
+        $form = $this->createForm(EntretientType::class,$entretient);
+        $form->handleRequest($request);
+        if($form->isSubmitted() and $form->isValid())
+        {
+            $em->persist($entretient->setVehicule($vehicule));
+            $em->flush();
+            $this->addFlash("success", "Votre Entretient a été enregistré avec succées");
+            return $this->redirectToRoute("vehicule_form_entretients",array(
+                "id"=>$id
+            ));
+        }
+        return $this->render(":vehicule:entretient.html.twig", array(
+            "form" => $form->createView(),
+            "vehicule"=>$vehicule
+        ));
+    }
+
+
+
+    /**
+     * @Route("/deleteEntretient/{id}", name="vehicule_entretient_delete")
+     */
+    public function deleteEntretientAction($id)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $entretient = $em->getRepository(entretient::class)->find($id);
+        if($entretient)
+        {
+            try{
+                $em->remove($entretient);
+                $em->flush();
+                $this->addFlash("success", "Votre entretient a été supprimée avec succées");
+            }
+            catch (\Exception $exception)
+            {
+                $this->addFlash("danger", "Impossible de supprimer ce entretient");
+            }
+        }
+        /**
+         * @var $entretient Entretient
+         */
+        return $this->redirectToRoute("vehicule_form_entretients",array(
+            "id"=>$entretient->getVehicule()->getId()
+        ));
+    }
 
 
 }

@@ -70,6 +70,23 @@ class Vehicule
      */
     private $carburants;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Entretient",mappedBy="vehicule")
+     * @ORM\OrderBy({"dateEntretient" ="DESC"})
+     */
+    private $entretients;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCirculation", type="date")
+     */
+    private $dateCirculation;
+
+
+
+
     /**
      * Get id
      *
@@ -248,6 +265,7 @@ class Vehicule
         $this->enable=true;
         $this->vehiculeOccupations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->carburants = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->entretients = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public  function  __toString()
@@ -270,6 +288,25 @@ class Vehicule
         return $this;
     }
 
+
+    /**
+     * Add entretient
+     *
+     * @param \AppBundle\Entity\Entretient $entretient
+     *
+     * @return Vehicule
+     */
+    public function addEntretient(\AppBundle\Entity\Entretient $entretient)
+    {
+        $this->entretients[] = $entretient;
+
+        return $this;
+    }
+
+
+
+
+
     /**
      * Remove carburant
      *
@@ -280,6 +317,21 @@ class Vehicule
         $this->carburants->removeElement($carburant);
     }
 
+
+    /**
+     * Remove entretient
+     *
+     * @param \AppBundle\Entity\Entretient $entretient
+     */
+    public function removeEntretient(\AppBundle\Entity\Entretient $entretient)
+    {
+        $this->entretients->removeElement($entretient);
+    }
+
+
+
+
+
     /**
      * Get carburants
      *
@@ -288,5 +340,39 @@ class Vehicule
     public function getCarburants()
     {
         return $this->carburants;
+    }
+
+    /**
+     * Get entretients
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEntretients()
+    {
+        return $this->entretients;
+    }
+
+    /**
+     * Set dateCirculation
+     *
+     * @param \DateTime $dateCirculation
+     *
+     * @return Vehicule
+     */
+    public function setDateCirculation($dateCirculation)
+    {
+        $this->dateCirculation = $dateCirculation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCirculation
+     *
+     * @return \DateTime
+     */
+    public function getDateCirculation()
+    {
+        return $this->dateCirculation;
     }
 }

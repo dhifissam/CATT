@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+{% block title %}Remorques{% endblock %}
+{% block breadcrumb %}
+    <li><a href="{{ path('remorque_list') }}">Remorques</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="panel panel-body">
+         <div class="panel-heading">
+             {{ buttons.addItem("Nouvelle Remorque",path("remorque_form")) }}
+         </div>
+         <table class="table" id="myTable">
+             <thead>
+             <tr>
+                 <th>#</th>
+                 <th>Date de circulation</th>
+                 <th>Matricule</th>
+                 <th>Marque</th>
+                 <th>Num Chassit</th>
+                 <th>Enable</th>
+                 <th>Action</th>
+             </tr>
+             </thead>
+             <tbody>
+             {% for remorque in remorques %}
+                 <tr>
+                     <td>{{ remorque.id }}</td>
+                     <td>{{ remorque.dateCirculation|date('d/m/Y')  }}</td>
+                     <td>{{ remorque.matricule }}</td>
+                     <td>{{ remorque.marque }}</td>
+                     <td>{{ remorque.numChassit }}</td>
+
+                     <td>
+                         {% if remorque.enable %}
+                             <span class="label label-success" >Enable</span>
+                         {% else %}
+                             <span class="label label-danger">Disable</span>
+                         {% endif %}
+                     </td>
+                     <td>
+                         <ul class="icons-list">
+                             <li>{{ buttons.updateAction(path("remorque_form",{id:remorque.id})) }}</li>
+                             <li>{{ buttons.redirectAction(path("remorque_delete",{id:remorque.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer cette remorque') }}</li>
+                              <li>{{ buttons.redirectAction(path("remorque_form_entretients",{id:remorque.id}),"icon-hammer-wrench",null) }}</li>
+                         </ul>
+                     </td>
+                 </tr>
+             {% endfor %}
+             </tbody>
+         </table>
+     </div>
+ {% endblock %}

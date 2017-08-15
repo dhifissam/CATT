@@ -42,7 +42,8 @@
                              <li>{{ buttons.updateAction(path("vehicule_form",{id:vehicule.id})) }}</li>
                              <li>{{ buttons.redirectAction(path("vehicule_delete",{id:vehicule.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer cette vehicule') }}</li>
                              <li>{{ buttons.redirectAction(path("vehicule_form_chauffeurs",{id:vehicule.id}),"icon-users",null) }}</li>
-                             <li>{{ buttons.redirectAction(path("vehicule_form_carburants",{id:vehicule.id}),"icon-file-spreadsheet2",null) }}</li>
+                             <li>{{ buttons.redirectAction(path("vehicule_form_carburants",{id:vehicule.id})," icon-gas",null) }}</li>
+                             <li>{{ buttons.redirectAction(path("vehicule_form_entretients",{id:vehicule.id}),"icon-hammer-wrench",null) }}</li>
                          </ul>
                      </td>
                  </tr>

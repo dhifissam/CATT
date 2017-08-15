@@ -14,8 +14,7 @@
             <div class="category-content no-padding">
                 <ul class="navigation navigation-main navigation-accordion">
                     <li {% if app.request.get('_route')=="dashbord" %}class="active"{% endif %}>
-                        <a href="{{ path('dashbord') }}">
-                            <i class="icon-home4"></i> <span>Tableau de bord</span></a>
+                        <a href="{{ path('dashbord') }}"> <i class="icon-home4"></i> <span>Tableau de bord</span></a>
                     </li>
                     <li {% if app.request.getPathInfo|split('/user')|length > 1 %} class="active"{% endif %}>
                         <a href="{{ path('user_list') }}"><i class="icon-users2"></i> <span>Utilisateurs</span></a>
@@ -24,7 +23,10 @@
                         <a href="{{ path('chauffeur_list') }}"><i class="icon-users4"></i> <span>Chauffeurs</span></a>
                     </li>
                     <li {% if app.request.getPathInfo|split('/vehicule')|length > 1 %} class="active"{% endif %}>
-                        <a href="{{ path('vehicule_list') }}"><i class="icon-car"></i> <span>Vehicules</span></a>
+                        <a href="{{ path('vehicule_list') }}"><i class="icon-truck"></i> <span>Vehicules</span></a>
+                    </li>
+                    <li {% if app.request.getPathInfo|split('/remorque')|length > 1 %} class="active"{% endif %}>
+                        <a href="{{ path('remorque_list') }}"><i class="icon-bed2"></i> <span>Remorques</span></a>
                     </li>
                 </ul>
             </div>

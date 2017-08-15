@@ -1,0 +1,159 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Remorque
+ *
+ * @ORM\Table(name="remorque")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RemorqueRepository")
+ */
+class Remorque
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCirculation", type="date")
+     */
+    private $dateCirculation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="matricule", type="string", length=255)
+     */
+    private $matricule;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="marque", type="string", length=255)
+     */
+    private $marque;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numChassit", type="string", length=255)
+     */
+    private $numChassit;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set dateCirculation
+     *
+     * @param \DateTime $dateCirculation
+     *
+     * @return Remorque
+     */
+    public function setDateCirculation($dateCirculation)
+    {
+        $this->dateCirculation = $dateCirculation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCirculation
+     *
+     * @return \DateTime
+     */
+    public function getDateCirculation()
+    {
+        return $this->dateCirculation;
+    }
+
+    /**
+     * Set matricule
+     *
+     * @param string $matricule
+     *
+     * @return Remorque
+     */
+    public function setMatricule($matricule)
+    {
+        $this->matricule = $matricule;
+
+        return $this;
+    }
+
+    /**
+     * Get matricule
+     *
+     * @return string
+     */
+    public function getMatricule()
+    {
+        return $this->matricule;
+    }
+
+    /**
+     * Set marque
+     *
+     * @param string $marque
+     *
+     * @return Remorque
+     */
+    public function setMarque($marque)
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    /**
+     * Get marque
+     *
+     * @return string
+     */
+    public function getMarque()
+    {
+        return $this->marque;
+    }
+
+    /**
+     * Set numChassit
+     *
+     * @param string $numChassit
+     *
+     * @return Remorque
+     */
+    public function setNumChassit($numChassit)
+    {
+        $this->numChassit = $numChassit;
+
+        return $this;
+    }
+
+    /**
+     * Get numChassit
+     *
+     * @return string
+     */
+    public function getNumChassit()
+    {
+        return $this->numChassit;
+    }
+}
+
