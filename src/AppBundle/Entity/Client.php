@@ -248,5 +248,10 @@ class Client
     {
         return $this->registerCommerce;
     }
+
+    public function __toString()
+    {
+        return $this->nom;
+    }
 }
 

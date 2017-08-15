@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Mission
 {
+    const EN_ATTENTE=1;
+    const VALIDEE=2;
+    const ANNULEE=3;
+    const TERMINEE=4;
+
+
+
     /**
      * @var int
      *
@@ -62,12 +69,39 @@ class Mission
      */
     private $chauffeur;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client")
+     */
+    private $client;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Depot")
+     */
+    private $depotChargement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Depot")
+     */
+    private $depotDechargement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Vehicule")
+     */
+    private $vehicule;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Remorque")
+     */
+    private $remorque;
+
+    /**
+     * @ORM\Column(name="commentaire", type="text",nullable=true)
+     */
+    private $commentaire;
+
     public function __construct()
     {
-
-        $this->etat =1;
+        $this->etat =Mission::EN_ATTENTE;
         $this->dateCreation =new \DateTime();
     }
-
-
 }
