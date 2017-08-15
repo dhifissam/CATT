@@ -16,14 +16,19 @@
                     <li {% if app.request.get('_route')=="dashbord" %}class="active"{% endif %}>
                         <a href="{{ path('dashbord') }}"> <i class="icon-home4"></i> <span>Tableau de bord</span></a>
                     </li>
+
                     <li {% if app.request.getPathInfo|split('/user')|length > 1 %} class="active"{% endif %}>
                         <a href="{{ path('user_list') }}"><i class="icon-users2"></i> <span>Utilisateurs</span></a>
                     </li>
+
+                    <li {% if app.request.getPathInfo|split('/client')|length > 1 %} class="active"{% endif %}>
+                        <a href="{{ path('client_list') }}"><i class="icon-user-tie"></i> <span>Clients</span></a>
+                    </li>
                     <li {% if app.request.getPathInfo|split('/chauffeur')|length > 1 %} class="active"{% endif %}>
-                        <a href="{{ path('chauffeur_list') }}"><i class="icon-users4"></i> <span>Chauffeurs</span></a>
+                        <a href="{{ path('chauffeur_list') }}"><i class="icon-steering-wheel"></i> <span>Chauffeurs</span></a>
                     </li>
                     <li>
-                        <a href=""><i class="icon-truck"></i> <span>Vehicules</span></a>
+                        <a href=""><i class="icon-truck"></i> <span>Parc</span></a>
                         <ul>
                             <li {% if app.request.getPathInfo|split('/vehicule')|length > 1 %} class="active"{% endif %}>
                                 <a href="{{ path('vehicule_list') }}"><span>Vehicules</span></a>
@@ -34,10 +39,13 @@
                         </ul>
                     </li>
                     <li>
-                        <a href=""><i class="icon-list"></i> <span>Paramétrage</span></a>
+                        <a href=""><i class=" icon-hammer-wrench"></i> <span>Paramétrage</span></a>
                         <ul>
                             <li {% if app.request.getPathInfo|split('/typeEntretient')|length > 1 %} class="active"{% endif %}>
                                 <a href="{{ path('typeEntretient_list') }}"><span>Types Entretient</span></a>
+                            </li>
+                            <li {% if app.request.getPathInfo|split('/depot')|length > 1 %} class="active"{% endif %}>
+                                <a href="{{ path('depot_list') }}"><span>Depots</span></a>
                             </li>
                         </ul>
                     </li>

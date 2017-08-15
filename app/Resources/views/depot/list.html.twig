@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+{% block title %}Depots{% endblock %}
+{% block breadcrumb %}
+    <li><a href="{{ path('depot_list') }}">Depots</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="panel panel-body">
+         <div class="panel-heading">
+             {{ buttons.addItem("Nouveau depot",path("depot_form")) }}
+         </div>
+         <table class="table" id="myTable">
+             <thead>
+             <tr>
+                 <th>#</th>
+                 <th>Libellé</th>
+                 <th>Adresse</th>
+                 <th>Action</th>
+             </tr>
+             </thead>
+             <tbody>
+             {% for depot in depots %}
+                 <tr>
+                     <td>{{ depot.id }}</td>
+                     <td>{{ depot.libelle }}</td>
+                     <td>{{ depot.adresse }}</td>
+                     <td>
+                         <ul class="icons-list">
+                             <li>{{ buttons.updateAction(path("depot_form",{id:depot.id})) }}</li>
+                             <li>{{ buttons.redirectAction(path("depot_delete",{id:depot.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer cette depot') }}</li>
+                         </ul>
+                     </td>
+                 </tr>
+             {% endfor %}
+             </tbody>
+         </table>
+     </div>
+ {% endblock %}

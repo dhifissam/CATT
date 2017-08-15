@@ -1,0 +1,35 @@
+{% extends ":client:list.html.twig" %}
+{% block title %}Client{% endblock %}
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="#">{% if client.id is null %}Ajout{% else %}Modif{% endif %}</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="row">
+         <div class="col-md-12">
+             {{ form_start(form) }}
+             <div class="panel panel-flat">
+                 <div class="panel-body">
+                     <div class="row">
+                         {{ forms.input("col-md-4","Nom",form.nom) }}
+                         {{ forms.input("col-md-4","Matrcule Fiscale",form.matriculeFiscale) }}
+                         {{ forms.input("col-md-4","Registre de commerce",form.registerCommerce) }}
+                     </div>
+                     <div class="row">
+                         {{ forms.input("col-md-12","Adresse",form.adresse) }}
+                     </div>
+                     <div class="row">
+                         {{ forms.input("col-md-4","Tel 1",form.tel1) }}
+                         {{ forms.input("col-md-4","Tel 2",form.tel2) }}
+                         {{ forms.input("col-md-4","Email",form.email) }}
+                     </div>
+                     {{ buttons.submitForm() }}
+                 </div>
+             </div>
+             {{ form_end(form) }}
+         </div>
+     </div>
+ {% endblock %}
+{% block javascripts %}
+    {{ scripts.form() }}
+{% endblock %}
