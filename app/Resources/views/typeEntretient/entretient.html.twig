@@ -1,0 +1,56 @@
+{% extends ":remorque:form.html.twig" %}
+{% block title %}Remorques Entretients{% endblock %}
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="#">Entretients</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="row">
+         <div class="col-md-12">
+             {{ form_start(form) }}
+             <div class="panel panel-flat">
+                 <div class="panel-body">
+                     <div class="row">
+                         {{ forms.input("col-md-3","Date Entretient",form.dateEntretient) }}
+                         {{ forms.input("col-md-3","Type Entretient",form.typeEntretient) }}
+                         {{ forms.input("col-md-3","Designation",form.designation) }}
+                     </div>
+                     {{ buttons.submitForm() }}
+                 </div>
+             </div>
+             {{ form_end(form) }}
+         </div>
+     </div>
+     <div class="row">
+         <div class="panel panel-body">
+             <table class="table" id="myTable">
+                 <thead>
+                 <tr>
+                     <th>Date Entretient</th>
+                     <th>Type Entretient</th>
+                     <th>Designation</th>
+                     <th>Action</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+                 {% for entretient  in remorque.entretients %}
+                     <tr>
+                         <td>{{ entretient.dateEntretient|date('d/m/Y') }}</td>
+                         <td>{{ entretient.typeEntretient}}</td>
+                         <td>{{ entretient.designation }}</td>
+                         <td>
+                             <ul class="icons-list">
+                                 <li>{{ buttons.updateAction(path("remorque_form_entretients",{id:remorque.id, id2:entretient.id})) }}</li>
+                                 <li>{{ buttons.redirectAction(path("remorque_entretient_delete",{id:entretient.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer ce entretient') }}</li>
+                             </ul>
+                         </td>
+                     </tr>
+                 {% endfor %}
+                 </tbody>
+             </table>
+         </div>
+     </div>
+ {% endblock %}
+{% block javascripts %}
+    {{ scripts.form() }}
+{% endblock %}

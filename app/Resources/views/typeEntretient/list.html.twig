@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+{% block title %}Type entretients{% endblock %}
+{% block breadcrumb %}
+    <li><a href="{{ path('typeEntretient_list') }}">Type entretients</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="panel panel-body">
+         <div class="panel-heading">
+             {{ buttons.addItem("Nouvelle Remorque",path("typeEntretient_form")) }}
+         </div>
+         <table class="table" id="myTable">
+             <thead>
+             <tr>
+                 <th>#</th>
+                 <th>Libellé</th>
+                 <th>Action</th>
+             </tr>
+             </thead>
+             <tbody>
+             {% for typeEntretient in typeEntretients %}
+                 <tr>
+                     <td>{{ typeEntretient.id }}</td>
+                     <td>{{ typeEntretient.libelle }}</td>
+                     <td>
+                         <ul class="icons-list">
+                             <li>{{ buttons.updateAction(path("typeEntretient_form",{id:typeEntretient.id})) }}</li>
+                             <li>{{ buttons.redirectAction(path("typeEntretient_delete",{id:typeEntretient.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer cette typeEntretient') }}</li>
+                         </ul>
+                     </td>
+                 </tr>
+             {% endfor %}
+             </tbody>
+         </table>
+     </div>
+ {% endblock %}

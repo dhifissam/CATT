@@ -29,9 +29,7 @@ class Entretient
     private $dateEntretient;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="typeEntretient", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TypeEntretient")
      */
     private $typeEntretient;
 
@@ -53,13 +51,10 @@ class Entretient
     private $vehicule;
 
 
-
-
-
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -91,30 +86,6 @@ class Entretient
     }
 
     /**
-     * Set typeEntretient
-     *
-     * @param string $typeEntretient
-     *
-     * @return Entretient
-     */
-    public function setTypeEntretient($typeEntretient)
-    {
-        $this->typeEntretient = $typeEntretient;
-
-        return $this;
-    }
-
-    /**
-     * Get typeEntretient
-     *
-     * @return string
-     */
-    public function getTypeEntretient()
-    {
-        return $this->typeEntretient;
-    }
-
-    /**
      * Set designation
      *
      * @param string $designation
@@ -139,32 +110,28 @@ class Entretient
     }
 
     /**
-     * Set vehicule
+     * Set typeEntretient
      *
-     * @param \AppBundle\Entity\Vehicule $vehicule
+     * @param \AppBundle\Entity\TypeEntretient $typeEntretient
      *
      * @return Entretient
      */
-    public function setVehicule(\AppBundle\Entity\Vehicule $vehicule = null)
+    public function setTypeEntretient(\AppBundle\Entity\TypeEntretient $typeEntretient = null)
     {
-        $this->vehicule = $vehicule;
+        $this->typeEntretient = $typeEntretient;
 
         return $this;
     }
 
     /**
-     * Get vehicule
+     * Get typeEntretient
      *
-     * @return \AppBundle\Entity\Vehicule
+     * @return \AppBundle\Entity\TypeEntretient
      */
-    public function getVehicule()
+    public function getTypeEntretient()
     {
-        return $this->vehicule;
+        return $this->typeEntretient;
     }
-
-
-
-
 
     /**
      * Set remorque
@@ -190,9 +157,27 @@ class Entretient
         return $this->remorque;
     }
 
+    /**
+     * Set vehicule
+     *
+     * @param \AppBundle\Entity\Vehicule $vehicule
+     *
+     * @return Entretient
+     */
+    public function setVehicule(\AppBundle\Entity\Vehicule $vehicule = null)
+    {
+        $this->vehicule = $vehicule;
 
+        return $this;
+    }
 
-
-
-
+    /**
+     * Get vehicule
+     *
+     * @return \AppBundle\Entity\Vehicule
+     */
+    public function getVehicule()
+    {
+        return $this->vehicule;
+    }
 }

@@ -1,0 +1,25 @@
+{% extends ":typeEntretient:list.html.twig" %}
+{% block title %}Types Entretient{% endblock %}
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="#">{% if typeEntretient.id is null %}Ajout{% else %}Modif{% endif %}</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="row">
+         <div class="col-md-12">
+             {{ form_start(form) }}
+             <div class="panel panel-flat">
+                 <div class="panel-body">
+                     <div class="row">
+                         {{ forms.input("col-md-4","Libellé",form.libelle) }}
+                     </div>
+                     {{ buttons.submitForm() }}
+                 </div>
+             </div>
+             {{ form_end(form) }}
+         </div>
+     </div>
+ {% endblock %}
+{% block javascripts %}
+    {{ scripts.form() }}
+{% endblock %}

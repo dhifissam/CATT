@@ -22,11 +22,24 @@
                     <li {% if app.request.getPathInfo|split('/chauffeur')|length > 1 %} class="active"{% endif %}>
                         <a href="{{ path('chauffeur_list') }}"><i class="icon-users4"></i> <span>Chauffeurs</span></a>
                     </li>
-                    <li {% if app.request.getPathInfo|split('/vehicule')|length > 1 %} class="active"{% endif %}>
-                        <a href="{{ path('vehicule_list') }}"><i class="icon-truck"></i> <span>Vehicules</span></a>
+                    <li>
+                        <a href=""><i class="icon-truck"></i> <span>Vehicules</span></a>
+                        <ul>
+                            <li {% if app.request.getPathInfo|split('/vehicule')|length > 1 %} class="active"{% endif %}>
+                                <a href="{{ path('vehicule_list') }}"><span>Vehicules</span></a>
+                            </li>
+                            <li {% if app.request.getPathInfo|split('/remorque')|length > 1 %} class="active"{% endif %}>
+                                <a href="{{ path('remorque_list') }}"><span>Remorques</span></a>
+                            </li>
+                        </ul>
                     </li>
-                    <li {% if app.request.getPathInfo|split('/remorque')|length > 1 %} class="active"{% endif %}>
-                        <a href="{{ path('remorque_list') }}"><i class="icon-bed2"></i> <span>Remorques</span></a>
+                    <li>
+                        <a href=""><i class="icon-list"></i> <span>Paramétrage</span></a>
+                        <ul>
+                            <li {% if app.request.getPathInfo|split('/typeEntretient')|length > 1 %} class="active"{% endif %}>
+                                <a href="{{ path('typeEntretient_list') }}"><span>Types Entretient</span></a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
