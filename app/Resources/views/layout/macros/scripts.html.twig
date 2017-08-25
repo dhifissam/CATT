@@ -1,25 +1,28 @@
-{% macro dataTable(path,columns) %}
+{% macro dataTable(path=null,columns=null) %}
     <script type="text/javascript" src="{{ asset('back_template/assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('back_template/assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('back_template/assets/js/pages/datatables_data_sources.js') }}"></script>
     <script type="text/javascript" src="{{ asset('back_template/assets/js/pages/components_popups.js') }}"></script>
-    <script>
-        var dataTable;
-        $(function () {
-            dataTable = $('#myTable').DataTable({
-                ajax: {
-                    url: '{{ path(path) }}',
-                    type: "POST"
-                },
-                columns: [{{ columns|raw }}]
+    <script type="text/javascript" src="{{ asset('back_template/assets/js/pages/datatables_basic.js') }}"></script>
+    {% if path and columns %}
+        <script type="text/javascript" src="{{ asset('back_template/assets/js/pages/datatables_data_sources.js') }}"></script>
+        <script>
+            var dataTable;
+            $(function () {
+                dataTable = $('#myTable').DataTable({
+                    ajax: {
+                        url: '{{ path(path) }}',
+                        type: "POST"
+                    },
+                    columns: [{{ columns|raw }}]
+                });
+                $('.dataTables_length select').select2({
+                    minimumResultsForSearch: Infinity,
+                    width: 'auto'
+                });
+                $('.dataTables_filter input[type=search]').attr('placeholder','Type to filter...');
             });
-            $('.dataTables_length select').select2({
-                minimumResultsForSearch: Infinity,
-                width: 'auto'
-            });
-            $('.dataTables_filter input[type=search]').attr('placeholder','Type to filter...');
-        });
-    </script>
+        </script>
+    {% endif %}
 {% endmacro %}
 {% macro dashboard() %}
     <script type="text/javascript" src="{{ asset('back_template/assets/js/plugins/visualization/d3/d3.min.js') }}"></script>

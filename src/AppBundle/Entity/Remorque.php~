@@ -36,9 +36,7 @@ class Remorque
     private $matricule;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="marque", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Marque")
      */
     private $marque;
 
@@ -48,6 +46,18 @@ class Remorque
      * @ORM\Column(name="numChassit", type="string", length=255)
      */
     private $numChassit;
+
+    /**
+     * @ORM\Column(name="enable", type="boolean")
+     */
+    private $enable;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Entretient",mappedBy="remorque")
+     * @ORM\OrderBy({"dateEntretient" ="DESC"})
+     */
+    private $entretients;
+
 
 
     /**
@@ -108,29 +118,6 @@ class Remorque
         return $this->matricule;
     }
 
-    /**
-     * Set marque
-     *
-     * @param string $marque
-     *
-     * @return Remorque
-     */
-    public function setMarque($marque)
-    {
-        $this->marque = $marque;
-
-        return $this;
-    }
-
-    /**
-     * Get marque
-     *
-     * @return string
-     */
-    public function getMarque()
-    {
-        return $this->marque;
-    }
 
     /**
      * Set numChassit
@@ -155,5 +142,87 @@ class Remorque
     {
         return $this->numChassit;
     }
-}
 
+
+
+    /**
+     * Set enable
+     *
+     * @param boolean $enable
+     *
+     * @return Remorque
+     */
+    public function setEnable($enable)
+    {
+        $this->enable = $enable;
+
+        return $this;
+    }
+
+    /**
+     * Get enable
+     *
+     * @return boolean
+     */
+    public function getEnable()
+    {
+        return $this->enable;
+    }
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->enable=true;
+         $this->entretients = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public  function  __toString()
+    {
+        return $this->matricule;
+    }
+
+
+
+    /**
+     * Add entretient
+     *
+     * @param \AppBundle\Entity\Entretient $entretient
+     *
+     * @return Remorque
+     */
+    public function addEntretient(\AppBundle\Entity\Entretient $entretient)
+    {
+        $this->entretients[] = $entretient;
+
+        return $this;
+    }
+
+
+    /**
+     * Get entretients
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEntretients()
+    {
+        return $this->entretients;
+    }
+
+
+
+    /**
+     * Remove entretient
+     *
+     * @param \AppBundle\Entity\Entretient $entretient
+     */
+    public function removeEntretient(\AppBundle\Entity\Entretient $entretient)
+    {
+        $this->entretients->removeElement($entretient);
+    }
+
+
+
+}

@@ -19,6 +19,10 @@
                                 {{ forms.input("col-md-3","Heure Supplimantaire 50%",form.heureSupp50) }}
                                 {{ forms.input("col-md-3","Heure Supplimantaire 75%",form.heureSupp75) }}
                             </div>
+                            <div class="row">
+                                {{ forms.input("col-md-3","Mois",form.mois) }}
+                                {{ forms.input("col-md-3","Année",form.annee) }}
+                            </div>
                             {{ buttons.submitForm() }}
                         </div>
                     </div>
@@ -30,7 +34,7 @@
                     <table class="table" id="myTable">
                         <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Mois</th>
                             <th>Montant</th>
                             <th>Nombre de Jour Travailler</th>
                             <th>Montant Dejeunee</th>
@@ -44,7 +48,7 @@
                         <tbody>
                         {% for salaire in salaires %}
                             <tr>
-                                <td>{{ salaire.id }}</td>
+                                <td>{{ salaire.mois }}/{{ salaire.annee }}</td>
                                 <td>{{ salaire.montant }}</td>
                                 <td>{{ salaire.nbrJourTravailer }}</td>
                                 <td>{{ salaire.montantDejeuner }}</td>
@@ -56,7 +60,7 @@
                                 <td>
                                     <ul class="icons-list">
                                         <li>{{ buttons.updateAction(path("chauffeur_form_salaires",{ id:chauffeur.id , id2:salaire.id})) }}</li>
-                                        <li>{{ buttons.redirectAction(path("salaire_delete",{id:salaire.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer ce bon') }}</li>
+                                        <li>{{ buttons.redirectAction(path("salaire_delete",{id:salaire.id}),"icon-trash",null,'Etes vous certain de vouloir supprimer ce bon') }}</li>
                                     </ul>
                                 </td>
                             </tr>

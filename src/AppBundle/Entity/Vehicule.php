@@ -27,14 +27,14 @@ class Vehicule
      * @ORM\Column(name="matricule", type="string", length=255)
      */
     private $matricule;
-    
+
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="marque", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Marque")
      */
     private $marque;
+
+
 
     /**
      * @var string
@@ -124,11 +124,11 @@ class Vehicule
     /**
      * Set marque
      *
-     * @param string $marque
+     * @param \AppBundle\Entity\Marque $marque
      *
      * @return Vehicule
      */
-    public function setMarque($marque)
+    public function setMarque(\AppBundle\Entity\Marque $marque = null)
     {
         $this->marque = $marque;
 
@@ -138,12 +138,13 @@ class Vehicule
     /**
      * Get marque
      *
-     * @return string
+     * @return \AppBundle\Entity\Marque
      */
     public function getMarque()
     {
         return $this->marque;
     }
+
 
     /**
      * Set numChassit
@@ -270,7 +271,14 @@ class Vehicule
 
     public  function  __toString()
     {
-        return $this->matricule;
+        $chauffeur = $this->getChauffeur();
+        /**
+         * @var  $chauffeur Chauffeur
+         */
+        if($chauffeur)
+            return $this->matricule .' ('.$chauffeur->getNom().' '.$chauffeur->getPrenom().')';
+        else
+            return $this->matricule;
     }
 
 
@@ -375,4 +383,5 @@ class Vehicule
     {
         return $this->dateCirculation;
     }
+
 }

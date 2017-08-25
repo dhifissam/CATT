@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Salaire
@@ -27,6 +28,20 @@ class Salaire
      * @ORM\Column(name="montant", type="float")
      */
     private $montant;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="annee", type="integer")
+     */
+    private $annee;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mois", type="integer")
+     */
+    private $mois;
 
     /**
      * @var int
@@ -255,5 +270,28 @@ class Salaire
     {
         return $this->heureSupp75;
     }
-}
 
+    /**
+     * Set chauffeur
+     *
+     * @param \AppBundle\Entity\Chauffeur $chauffeur
+     *
+     * @return Salaire
+     */
+    public function setChauffeur(\AppBundle\Entity\Chauffeur $chauffeur = null)
+    {
+        $this->chauffeur = $chauffeur;
+
+        return $this;
+    }
+
+    /**
+     * Get chauffeur
+     *
+     * @return \AppBundle\Entity\Chauffeur
+     */
+    public function getChauffeur()
+    {
+        return $this->chauffeur;
+    }
+}

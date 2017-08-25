@@ -27,6 +27,9 @@
                     <li {% if app.request.getPathInfo|split('/chauffeur')|length > 1 %} class="active"{% endif %}>
                         <a href="{{ path('chauffeur_list') }}"><i class="icon-steering-wheel"></i> <span>Chauffeurs</span></a>
                     </li>
+                    <li {% if app.request.getPathInfo|split('/mission')|length > 1 %} class="active"{% endif %}>
+                        <a href="{{ path('mission_list') }}"><i class="icon-tab"></i> <span>Missions</span></a>
+                    </li>
                     <li>
                         <a href=""><i class="icon-truck"></i> <span>Parc</span></a>
                         <ul>
@@ -46,6 +49,9 @@
                             </li>
                             <li {% if app.request.getPathInfo|split('/depot')|length > 1 %} class="active"{% endif %}>
                                 <a href="{{ path('depot_list') }}"><span>Depots</span></a>
+                            </li>
+                            <li {% if app.request.getPathInfo|split('/marque')|length > 1 %} class="active"{% endif %}>
+                                <a href="{{ path('marque_list') }}"><span>Marques</span></a>
                             </li>
                         </ul>
                     </li>

@@ -43,6 +43,7 @@ class MissionController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $mission->setUser($this->getUser());
             $em->persist($mission);
             $em->flush();
             $this->addFlash("success", "Votre mission a été enregistré avec succées");
@@ -71,8 +72,67 @@ class MissionController extends Controller
             }
             catch (\Exception $exception)
             {
-                $this->addFlash("danger", "Impossible de supprimer ce mission");
+                $this->addFlash("danger", "Impossible de supprimer cette mission");
             }
+        }
+        return $this->redirectToRoute("mission_list");
+    }
+
+    /**
+     * @Route("/valider/{id}", name="mission_valider")
+     */
+    public function validerAction($id)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $mission = $em->getRepository(Mission::class)->find($id);
+        if($mission)
+        {
+            /**
+             * @var $mission Mission
+             */
+            $em->persist($mission->setEtat(Mission::VALIDEE)->setValidateur($this->getUser()));
+            $em->flush();
+            $this->addFlash("success", "Votre mission a été validée avec succées");
+        }
+        return $this->redirectToRoute("mission_list");
+    }
+
+    /**
+     * @Route("/terminer/{id}", name="mission_terminer")
+     */
+    public function terminerAction($id)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $mission = $em->getRepository(Mission::class)->find($id);
+        if($mission)
+        {
+            /**
+             * @var $mission Mission
+             */
+            $em->persist($mission->setEtat(Mission::TERMINEE));
+            $em->flush();
+            $this->addFlash("success", "Votre mission a été terminée avec succées");
+        }
+        return $this->redirectToRoute("mission_list");
+    }
+
+
+
+    /**
+     * @Route("/annuler/{id}", name="mission_annuler")
+     */
+    public function annulerAction($id)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $mission = $em->getRepository(Mission::class)->find($id);
+        if($mission)
+        {
+            /**
+             * @var $mission Mission
+             */
+            $em->persist($mission->setEtat(Mission::ANNULEE));
+            $em->flush();
+            $this->addFlash("success", "Votre mission a été annulée avec succées");
         }
         return $this->redirectToRoute("mission_list");
     }

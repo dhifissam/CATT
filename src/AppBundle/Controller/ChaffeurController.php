@@ -97,6 +97,26 @@ class ChaffeurController extends Controller
         $form->handleRequest($request);
         if($form->isSubmitted() and $form->isValid())
         {
+            if(!$id2)
+            {
+                $verif =$em->getRepository(Salaire::class)->findOneBy(array(
+                    "chauffeur"=>$chauffeur,
+                    "mois"=>$salaire->getMois(),
+                    "annee"=>$salaire->getAnnee()
+                ));
+                if($verif)
+                {
+                    $this->addFlash("info", "Salaire déjà existant");
+                    return $this->render(":chauffeur:salaires.html.twig", array(
+                        "form" => $form->createView(),
+                        "chauffeur"=>$chauffeur,
+                        "salaire"=>$salaire,
+                        "salaires"=>$em->getRepository(Salaire::class)->findBy(array(
+                            "chauffeur"=>$chauffeur
+                        ))
+                    ));
+                }
+            }
             $em->persist($salaire->setChauffeur($chauffeur));
             $em->flush();
             $this->addFlash("success", "Votre salaire a été enregistré avec succées");

@@ -32,6 +32,20 @@ class Salaire
     /**
      * @var int
      *
+     * @ORM\Column(name="annee", type="integer")
+     */
+    private $annee;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mois", type="integer")
+     */
+    private $mois;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="nbrJourTravailer", type="integer")
      */
     private $nbrJourTravailer;
@@ -279,5 +293,53 @@ class Salaire
     public function getChauffeur()
     {
         return $this->chauffeur;
+    }
+
+    /**
+     * Set annee
+     *
+     * @param integer $annee
+     *
+     * @return Salaire
+     */
+    public function setAnnee($annee)
+    {
+        $this->annee = $annee;
+
+        return $this;
+    }
+
+    /**
+     * Get annee
+     *
+     * @return integer
+     */
+    public function getAnnee()
+    {
+        return $this->annee;
+    }
+
+    /**
+     * Set mois
+     *
+     * @param integer $mois
+     *
+     * @return Salaire
+     */
+    public function setMois($mois)
+    {
+        $this->mois = $mois;
+
+        return $this;
+    }
+
+    /**
+     * Get mois
+     *
+     * @return integer
+     */
+    public function getMois()
+    {
+        return $this->mois;
     }
 }

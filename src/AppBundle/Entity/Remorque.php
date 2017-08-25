@@ -36,9 +36,7 @@ class Remorque
     private $matricule;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="marque", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Marque")
      */
     private $marque;
 
@@ -120,29 +118,6 @@ class Remorque
         return $this->matricule;
     }
 
-    /**
-     * Set marque
-     *
-     * @param string $marque
-     *
-     * @return Remorque
-     */
-    public function setMarque($marque)
-    {
-        $this->marque = $marque;
-
-        return $this;
-    }
-
-    /**
-     * Get marque
-     *
-     * @return string
-     */
-    public function getMarque()
-    {
-        return $this->marque;
-    }
 
     /**
      * Set numChassit
@@ -250,4 +225,28 @@ class Remorque
 
 
 
+
+    /**
+     * Set marque
+     *
+     * @param \AppBundle\Entity\Marque $marque
+     *
+     * @return Remorque
+     */
+    public function setMarque(\AppBundle\Entity\Marque $marque = null)
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    /**
+     * Get marque
+     *
+     * @return \AppBundle\Entity\Marque
+     */
+    public function getMarque()
+    {
+        return $this->marque;
+    }
 }

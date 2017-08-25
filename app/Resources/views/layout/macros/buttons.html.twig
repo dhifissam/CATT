@@ -3,7 +3,7 @@
 {% endmacro %}
 {% macro redirectAction(path,class,text,message=null) %}
     {% if message %}
-        <a href="javascript:void(0)" data-popup="tooltip" title="{{ text }}"  class="redictionItem" data-message="{{ message }}" data-path="{{ path }}"><i class="{{ class }}"></i></a>
+        <a href="javascript:void(0)" data-popup="tooltip" title="{{ text }}"  class="redictionItem" data-message="{{ message }}" data-path="{{ path }}"><i class="{{ class }}"></i> {{ text }}</a>
     {% else %}
         <a href="{{ path }}"><i class="{{ class }}"></i> {{ text }}</a>
     {% endif %}

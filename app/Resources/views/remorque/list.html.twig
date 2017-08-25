@@ -8,7 +8,7 @@
          <div class="panel-heading">
              {{ buttons.addItem("Nouvelle Remorque",path("remorque_form")) }}
          </div>
-         <table class="table" id="myTable">
+         <table class="table datatable-basic">
              <thead>
              <tr>
                  <th>#</th>
@@ -39,7 +39,7 @@
                      <td>
                          <ul class="icons-list">
                              <li>{{ buttons.updateAction(path("remorque_form",{id:remorque.id})) }}</li>
-                             <li>{{ buttons.redirectAction(path("remorque_delete",{id:remorque.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer cette remorque') }}</li>
+                             <li>{{ buttons.redirectAction(path("remorque_delete",{id:remorque.id}),"icon-trash",null,'Etes vous certain de vouloir supprimer cette remorque') }}</li>
                               <li>{{ buttons.redirectAction(path("remorque_form_entretients",{id:remorque.id}),"icon-hammer-wrench",null) }}</li>
                          </ul>
                      </td>
@@ -49,3 +49,6 @@
          </table>
      </div>
  {% endblock %}
+{% block javascripts %}
+    {{ scripts.dataTable() }}
+{% endblock %}

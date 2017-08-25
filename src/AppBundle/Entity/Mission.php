@@ -397,4 +397,16 @@ class Mission
     {
         return $this->remorque;
     }
+
+    public function showEtat()
+    {
+        if($this->etat == Mission::VALIDEE)
+            return '<span class="label label-primary" >Validée</span>';
+        if($this->etat == Mission::EN_ATTENTE)
+            return '<span class="label label-default  " >En attente</span>';
+        if($this->etat == Mission::ANNULEE)
+            return '<span class="label label-danger" >Annulée</span>';
+        if($this->etat == Mission::TERMINEE)
+            return '<span class="label label-success" >Terminée</span>';
+    }
 }

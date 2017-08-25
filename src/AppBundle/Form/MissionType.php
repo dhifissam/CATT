@@ -2,10 +2,13 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Vehicule;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Doctrine\ORM\EntityRepository;
 
 class MissionType extends AbstractType
 {
@@ -23,7 +26,15 @@ class MissionType extends AbstractType
             ->add('client')
             ->add('depotChargement')
             ->add('depotDechargement')
-            ->add('vehicule')
+            ->add('vehicule',EntityType::class,array(
+                "class"=>Vehicule::class,
+                "placeholder"=>"",
+                "required"=>true,
+                "query_builder"=>function(EntityRepository $er)  {
+                    return $er->createQueryBuilder('v')
+                        ->where("v.enable = 1");
+                }
+            ))
             ->add('remorque');
     }
     

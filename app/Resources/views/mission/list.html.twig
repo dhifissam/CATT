@@ -1,0 +1,71 @@
+{% extends "base.html.twig" %}
+{% block title %}Missions{% endblock %}
+{% block breadcrumb %}
+    <li><a href="{{ path('mission_list') }}">Missions</a></li>
+{% endblock %}
+ {% block body %}
+     <div class="panel panel-body">
+         <div class="panel-heading">
+             {{ buttons.addItem("Nouvelle Mission",path("mission_form")) }}
+         </div>
+         <table class="table datatable-basic">
+             <thead>
+             <tr>
+
+                 <th>Date</th>
+                 <th>Client</th>
+                 <th>Vehicule</th>
+                 <th>Remorque</th>
+                 <th>Depot Dechargement</th>
+                 <th>Depot Chargement</th>
+                 <th>Valid.</th>
+                 <th>Etat</th>
+                 <th>Prix</th>
+                 <th>Action</th>
+             </tr>
+             </thead>
+             <tbody>
+             {% for mission in missions %}
+                 <tr>
+
+                     <td>{{ mission.date|date('Y-m-d') }}</td>
+                     <td>{{ mission.client}}</td>
+                     <td>{{ mission.vehicule}}</td>
+                     <td>{{ mission.remorque}}</td>
+                     <td>{{ mission.depotChargement}}</td>
+                     <td>{{ mission.depotDechargement}}</td>
+                     <td>{{ mission.validateur}}</td>
+                     <td>{{ mission.showEtat|raw }}</td>
+                     <td>{{ mission.prix}}</td>
+                     <td>
+
+                         <ul class="icons-list">
+                             <li class="dropdown">
+                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                     <i class="icon-menu9"></i>
+                                 </a>
+                                 <ul class="dropdown-menu dropdown-menu-right">
+                                     <li>{{ buttons.redirectAction(path("mission_form",{id:mission.id}),"icon-pencil","Modifier") }}</li>
+                                     <li>{{ buttons.redirectAction(path("mission_delete",{id:mission.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer cette mission') }}</li>
+                                     {% if mission.etat ==2 %}
+                                         <li>{{ buttons.redirectAction(path("mission_terminer",{id:mission.id})," icon-minus-circle2","Terminer") }}</li>
+                                     {% endif %}
+                                     {% if mission.etat != 3 %}
+                                         <li>{{ buttons.redirectAction(path("mission_annuler",{id:mission.id})," icon-cross","Annuler") }}</li>
+                                     {% endif %}
+                                     {% if mission.etat ==1 %}
+                                         <li>{{ buttons.redirectAction(path("mission_valider",{id:mission.id})," icon-check","Valider") }}</li>
+                                     {% endif %}
+                                 </ul>
+                             </li>
+                         </ul>
+                     </td>
+                 </tr>
+             {% endfor %}
+             </tbody>
+         </table>
+     </div>
+ {% endblock %}
+{% block javascripts %}
+    {{ scripts.dataTable() }}
+{% endblock %}
