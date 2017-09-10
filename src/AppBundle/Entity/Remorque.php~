@@ -59,6 +59,13 @@ class Remorque
     private $entretients;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\VisiteTechnique",mappedBy="remorque")
+     * @ORM\OrderBy({"date" ="DESC"})
+     */
+    private $visitesTechniques;
+
+
 
     /**
      * Get id
@@ -225,4 +232,28 @@ class Remorque
 
 
 
+
+    /**
+     * Set marque
+     *
+     * @param \AppBundle\Entity\Marque $marque
+     *
+     * @return Remorque
+     */
+    public function setMarque(\AppBundle\Entity\Marque $marque = null)
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    /**
+     * Get marque
+     *
+     * @return \AppBundle\Entity\Marque
+     */
+    public function getMarque()
+    {
+        return $this->marque;
+    }
 }

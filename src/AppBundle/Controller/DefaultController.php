@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Mission;
 use AppBundle\Entity\Vehicule;
+use AppBundle\Entity\VisiteTechnique;
 use AppBundle\Entity\Voyage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,9 +22,13 @@ class DefaultController extends Controller
         $em = $this->get('doctrine.orm.entity_manager');
         $missionsToDay = $em->getRepository(Mission::class)->getMissionToDay();
         $missionsTommorow = $em->getRepository(Mission::class)->getMissionTomorrow();
+        $visitesVehicule= $em->getRepository(VisiteTechnique::class)->getVisiteThisMonthVehicule();
+        $visitesRemorque= $em->getRepository(VisiteTechnique::class)->getVisiteThisMonthRemorque();
         return $this->render('dashbord/index.html.twig',array(
             'missionsToDay'=>$missionsToDay,
-            'missionsTommorow'=>$missionsTommorow
+            'missionsTommorow'=>$missionsTommorow,
+            'visitesVehicule'=>$visitesVehicule,
+            'visitesRemorque'=>$visitesRemorque
         ));
     }
 

@@ -1,0 +1,107 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * VisiteTechnique
+ *
+ * @ORM\Table(name="visite_technique")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\VisiteTechniqueRepository")
+ */
+class VisiteTechnique
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="prochaineDate", type="datetime")
+     */
+    private $prochaineDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Vehicule")
+     */
+    private $vehicule;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Remorque")
+     */
+    private $remorque;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return VisiteTechnique
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set prochaineDate
+     *
+     * @param \DateTime $prochaineDate
+     *
+     * @return VisiteTechnique
+     */
+    public function setProchaineDate($prochaineDate)
+    {
+        $this->prochaineDate = $prochaineDate;
+
+        return $this;
+    }
+
+    /**
+     * Get prochaineDate
+     *
+     * @return \DateTime
+     */
+    public function getProchaineDate()
+    {
+        return $this->prochaineDate;
+    }
+}
+

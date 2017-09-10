@@ -8,6 +8,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">Missions</h6>
+                </div>
                 <div class="table-responsive">
                     <table class="table text-nowrap">
                         <thead>
@@ -58,6 +61,53 @@
                             <td>{{ mission.depotDechargement}}</td>
                             <td>{{ mission.validateur}}</td>
                             <td>{{ mission.showEtat|raw }}</td>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">Visite Techniques <strong>[{{ "now"|date("F") }}]</strong></h6>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-nowrap">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if visitesVehicule|length>0 %}
+                            <tr class="active border-double">
+                                <td colspan="5">Vehicules</td>
+                                <td class="text-right">
+                                    <span class="progress-meter" id="today-progress" data-progress="30"></span>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% for visite in visitesVehicule %}
+                            <tr>
+                                <td>{{ visite.prochaineDate|date('d/m/Y') }}</td>
+                                <td>{{ visite.vehicule}}</td>
+                            </tr>
+                        {% endfor %}
+                        {% if visitesRemorque|length>0 %}
+                            <tr class="active border-double">
+                                <td colspan="5">Remorques</td>
+                                <td class="text-right">
+                                    <span class="progress-meter" id="today-progress" data-progress="30"></span>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% for visite in visitesRemorque %}
+                            <tr>
+                                <td>{{ visite.prochaineDate|date('d/m/Y') }}</td>
+                                <td>{{ visite.vehicule}}</td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>

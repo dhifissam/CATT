@@ -5,12 +5,14 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Carburant;
 use AppBundle\Entity\Entretient;
 use AppBundle\Entity\Vehicule;
+use AppBundle\Entity\VisiteTechnique;
 use AppBundle\Entity\User;
 use AppBundle\Entity\VehiculeOccupation;
 use AppBundle\Form\CarburantType;
 use AppBundle\Form\EntretientType;
 use AppBundle\Form\VehiculeOccupationType;
 use AppBundle\Form\VehiculeType;
+use AppBundle\Form\VisiteTechniqueType;
 use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -260,5 +262,60 @@ class VehiculeController extends Controller
         ));
     }
 
+    /**
+     * @Route("/form/{id}/visiteTechniques/{id2}", name="vehicule_form_visiteTechniques")
+     */
+    public function indexVisiteTechniqueAction($id,$id2=null,Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $vehicule = $em->getRepository(Vehicule::class)->find($id);
+        if($id2)
+            $visiteTechnique = $em->getRepository(visiteTechnique::class)->find($id2);
+        else
+            $visiteTechnique = new visiteTechnique();
+        $form = $this->createForm(visiteTechniqueType::class,$visiteTechnique);
+        $form->handleRequest($request);
+        if($form->isSubmitted() and $form->isValid())
+        {
+            $em->persist($visiteTechnique->setVehicule($vehicule));
+            $em->flush();
+            $this->addFlash("success", "Votre Bon a été enregistré avec succées");
+            return $this->redirectToRoute("vehicule_form_visiteTechniques",array(
+                "id"=>$id
+            ));
+        }
+        return $this->render(":vehicule:visiteTechnique.html.twig", array(
+            "form" => $form->createView(),
+            "vehicule"=>$vehicule
+        ));
+    }
 
+
+
+    /**
+     * @Route("/deletevisiteTechnique/{id}", name="vehicule_visiteTechnique_delete")
+     */
+    public function deleteVisiteTechniqueAction($id)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $visiteTechnique = $em->getRepository(visiteTechnique::class)->find($id);
+        if($visiteTechnique)
+        {
+            try{
+                $em->remove($visiteTechnique);
+                $em->flush();
+                $this->addFlash("success", "Votre bon a été supprimée avec succées");
+            }
+            catch (\Exception $exception)
+            {
+                $this->addFlash("danger", "Impossible de supprimer ce bon");
+            }
+        }
+        /**
+         * @var $visiteTechnique visiteTechnique
+         */
+        return $this->redirectToRoute("vehicule_form_visiteTechniques",array(
+            "id"=>$visiteTechnique->getVehicule()->getId()
+        ));
+    }
 }

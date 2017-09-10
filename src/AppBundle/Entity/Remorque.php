@@ -59,6 +59,13 @@ class Remorque
     private $entretients;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\VisiteTechnique",mappedBy="remorque")
+     * @ORM\OrderBy({"date" ="DESC"})
+     */
+    private $visitesTechniques;
+
+
 
     /**
      * Get id
@@ -248,5 +255,39 @@ class Remorque
     public function getMarque()
     {
         return $this->marque;
+    }
+
+    /**
+     * Add visitesTechnique
+     *
+     * @param \AppBundle\Entity\VisiteTechnique $visitesTechnique
+     *
+     * @return Remorque
+     */
+    public function addVisitesTechnique(\AppBundle\Entity\VisiteTechnique $visitesTechnique)
+    {
+        $this->visitesTechniques[] = $visitesTechnique;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitesTechnique
+     *
+     * @param \AppBundle\Entity\VisiteTechnique $visitesTechnique
+     */
+    public function removeVisitesTechnique(\AppBundle\Entity\VisiteTechnique $visitesTechnique)
+    {
+        $this->visitesTechniques->removeElement($visitesTechnique);
+    }
+
+    /**
+     * Get visitesTechniques
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisitesTechniques()
+    {
+        return $this->visitesTechniques;
     }
 }

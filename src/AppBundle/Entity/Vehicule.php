@@ -85,6 +85,13 @@ class Vehicule
     private $dateCirculation;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\VisiteTechnique",mappedBy="vehicule")
+     * @ORM\OrderBy({"date" ="DESC"})
+     */
+    private $visitesTechniques;
+
+
 
 
     /**
@@ -384,4 +391,38 @@ class Vehicule
         return $this->dateCirculation;
     }
 
+
+    /**
+     * Add visitesTechnique
+     *
+     * @param \AppBundle\Entity\VisiteTechnique $visitesTechnique
+     *
+     * @return Vehicule
+     */
+    public function addVisitesTechnique(\AppBundle\Entity\VisiteTechnique $visitesTechnique)
+    {
+        $this->visitesTechniques[] = $visitesTechnique;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitesTechnique
+     *
+     * @param \AppBundle\Entity\VisiteTechnique $visitesTechnique
+     */
+    public function removeVisitesTechnique(\AppBundle\Entity\VisiteTechnique $visitesTechnique)
+    {
+        $this->visitesTechniques->removeElement($visitesTechnique);
+    }
+
+    /**
+     * Get visitesTechniques
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisitesTechniques()
+    {
+        return $this->visitesTechniques;
+    }
 }
