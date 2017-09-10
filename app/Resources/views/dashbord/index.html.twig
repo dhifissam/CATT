@@ -7,7 +7,62 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h1>Dashboard</h1>
+            <div class="panel panel-flat">
+                <div class="table-responsive">
+                    <table class="table text-nowrap">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Client</th>
+                            <th>Vehicule</th>
+                            <th>Remorque</th>
+                            <th>Depot Dechargement</th>
+                            <th>Depot Chargement</th>
+                            <th>Valid.</th>
+                            <th>Etat</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if missionsToDay|length>0 %}
+                            <tr class="active border-double">
+                                <td colspan="5">Aujourd'hui</td>
+                                <td class="text-right">
+                                    <span class="progress-meter" id="today-progress" data-progress="30"></span>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% for mission in missionsToDay %}
+                            <td>{{ mission.date|date('Y-m-d') }}</td>
+                            <td>{{ mission.client}}</td>
+                            <td>{{ mission.vehicule}}</td>
+                            <td>{{ mission.remorque}}</td>
+                            <td>{{ mission.depotChargement}}</td>
+                            <td>{{ mission.depotDechargement}}</td>
+                            <td>{{ mission.validateur}}</td>
+                            <td>{{ mission.showEtat|raw }}</td>
+                        {% endfor %}
+                        {% if missionsTommorow|length>0 %}
+                            <tr class="active border-double">
+                                <td colspan="5">Demain</td>
+                                <td class="text-right">
+                                    <span class="progress-meter" id="yesterday-progress" data-progress="65"></span>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% for mission in missionsTommorow %}
+                            <td>{{ mission.date|date('Y-m-d') }}</td>
+                            <td>{{ mission.client}}</td>
+                            <td>{{ mission.vehicule}}</td>
+                            <td>{{ mission.remorque}}</td>
+                            <td>{{ mission.depotChargement}}</td>
+                            <td>{{ mission.depotDechargement}}</td>
+                            <td>{{ mission.validateur}}</td>
+                            <td>{{ mission.showEtat|raw }}</td>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 

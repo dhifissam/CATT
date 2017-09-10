@@ -12,4 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class MissionRepository extends EntityRepository
 {
+    public function getMissionToDay()
+    {
+        $query = $this->createQueryBuilder("m");
+        $query
+            ->where("m.date = :date")
+            ->setParameter("date",(new \DateTime())->format("Y-m-d"));
+        return $query->getQuery()->getResult();
+    }
+    public function getMissionTomorrow()
+    {
+        $query = $this->createQueryBuilder("m");
+        $query
+            ->where("m.date = :date")
+            ->setParameter("date",(new \DateTime())->modify("+1 day")->format("Y-m-d"));
+        return $query->getQuery()->getResult();
+    }
 }

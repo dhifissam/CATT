@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Mission;
 use AppBundle\Entity\Vehicule;
 use AppBundle\Entity\Voyage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -15,9 +16,15 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="dashbord")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        return $this->render('dashbord/index.html.twig');
+        $em = $this->get('doctrine.orm.entity_manager');
+        $missionsToDay = $em->getRepository(Mission::class)->getMissionToDay();
+        $missionsTommorow = $em->getRepository(Mission::class)->getMissionTomorrow();
+        return $this->render('dashbord/index.html.twig',array(
+            'missionsToDay'=>$missionsToDay,
+            'missionsTommorow'=>$missionsTommorow
+        ));
     }
 
     /**

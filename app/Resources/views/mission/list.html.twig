@@ -11,7 +11,6 @@
          <table class="table datatable-basic">
              <thead>
              <tr>
-
                  <th>Date</th>
                  <th>Client</th>
                  <th>Vehicule</th>
@@ -27,7 +26,6 @@
              <tbody>
              {% for mission in missions %}
                  <tr>
-
                      <td>{{ mission.date|date('Y-m-d') }}</td>
                      <td>{{ mission.client}}</td>
                      <td>{{ mission.vehicule}}</td>
@@ -38,7 +36,6 @@
                      <td>{{ mission.showEtat|raw }}</td>
                      <td>{{ mission.prix}}</td>
                      <td>
-
                          <ul class="icons-list">
                              <li class="dropdown">
                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
