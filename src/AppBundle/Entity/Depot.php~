@@ -24,13 +24,6 @@ class Depot
     /**
      * @var string
      *
-     * @ORM\Column(name="codedepot", type="string", length=255,nullable=true)
-     */
-    private $code;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="libelle", type="string", length=255)
      */
     private $libelle;
@@ -105,24 +98,5 @@ class Depot
     {
         return $this->libelle;
     }
-
-    /**
-     * @return string
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * @param string $code
-     * @return Depot
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-        return $this;
-    }
-
-
 }
+

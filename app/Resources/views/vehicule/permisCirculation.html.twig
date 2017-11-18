@@ -1,11 +1,11 @@
 {% extends ":vehicule:form.html.twig" %}
-{% block title %}Visites Techniques{% endblock %}
+{% block title %}Permis de Circulation{% endblock %}
 {% block breadcrumb %}
     {{ parent() }}
-    <li><a href="#">Visites Techniques</a></li>
+    <li><a href="#">Permis de Circulation</a></li>
 {% endblock %}
  {% block body %}
-    {% if is_granted("ROLE_EXPLOITATION")%}
+     {% if is_granted("ROLE_EXPLOITATION")%}
      <div class="row">
          <div class="col-md-12">
              {{ form_start(form) }}
@@ -21,29 +21,29 @@
              {{ form_end(form) }}
          </div>
      </div>
-    {% endif %}
+     {% endif %}
      <div class="row">
          <div class="panel panel-body">
              <table class="table" id="myTable">
                  <thead>
                  <tr>
-                     <th>Date Visite</th>
-                     <th>Prochaine visite</th>
+                     <th>Date Permis</th>
+                     <th>Prochain Date Permis</th>
                      {% if is_granted("ROLE_EXPLOITATION")%}
                      <th>Action</th>
                      {% endif %}
                  </tr>
                  </thead>
                  <tbody>
-                 {% for entretient  in vehicule.visitesTechniques %}
+                 {% for entretient  in vehicule.permisCirculations %}
                      <tr>
                          <td>{{ entretient.date|date('d/m/Y') }}</td>
                          <td>{{ entretient.prochaineDate|date('d/m/Y') }}</td>
                          <td>
                              {% if is_granted("ROLE_EXPLOITATION")%}
                              <ul class="icons-list">
-                                 <li>{{ buttons.updateAction(path("vehicule_form_visiteTechniques",{id:vehicule.id, id2:entretient.id})) }}</li>
-                                 <li>{{ buttons.redirectAction(path("vehicule_visiteTechnique_delete",{id:entretient.id}),"icon-trash",null,'Etes vous certain de vouloir supprimer ce bon') }}</li>
+                                 <li>{{ buttons.updateAction(path("vehicule_form_permisCirulations",{id:vehicule.id, id2:entretient.id})) }}</li>
+                                 <li>{{ buttons.redirectAction(path("vehicule_permisCirulation_delete",{id:entretient.id}),"icon-trash",null,'Etes vous certain de vouloir supprimer ce permit de circulation') }}</li>
                              </ul>
                              {% endif %}
                          </td>

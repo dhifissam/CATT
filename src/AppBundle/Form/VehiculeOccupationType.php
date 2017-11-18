@@ -4,7 +4,7 @@ namespace AppBundle\Form;
 
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,9 +16,9 @@ class VehiculeOccupationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dateOccupation',DateTimeType::class,array(
+            ->add('dateOccupation',DateType::class,array(
                 'widget'=>"single_text",
-                'format'=>'yyyy-MM-dd HH:mm'
+                'format'  =>'yyyy-MM-dd',
             ))
             ->add('chauffeur');
     }

@@ -1,0 +1,72 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Pointage
+ *
+ * @ORM\Table(name="pointage")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PointageRepository")
+ */
+class Pointage
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="date_pointage", type="date")
+     */
+    private $date;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="montantDejeuner", type="integer")
+     */
+    private $montantDejeuner;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="monatantDinee", type="integer")
+     */
+    private $monatantDinee;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="montantNuitee", type="integer")
+     */
+    private $montantNuitee;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="heureSupp50", type="float")
+     */
+    private $heureSupp50;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="heureSupp75", type="float")
+     */
+    private $heureSupp75;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Chauffeur")
+     */
+    private $chauffeur;
+
+}

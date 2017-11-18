@@ -16,6 +16,7 @@ class SalaireType extends AbstractType
     {
         $builder
             ->add('montant')
+            ->add('avance')
             ->add('nbrJourTravailer')
             ->add('montantDejeuner')
             ->add('monatantDinee')

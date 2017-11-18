@@ -32,6 +32,7 @@ class UserType extends AbstractType
                     'Administrateur'                  => 'ROLE_ADMIN',
                     'Responsable Transport'                    => 'ROLE_RESP_TRANSPORT',
                     'Exploitation'         => 'ROLE_EXPLOITATION',
+                    'Cordinateur'         => 'ROLE_CORDINATOR',
                     'Responsable Salaire' => 'ROLE_RESPONSABLE_SALAIRE'
                 ),
                 'required' => true,

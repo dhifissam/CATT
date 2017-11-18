@@ -24,9 +24,16 @@ class VehiculeOccupation
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateOccupation", type="datetime")
+     * @ORM\Column(name="dateOccupation", type="date")
      */
     private $dateOccupation;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_occupation_fin", type="date")
+     */
+    private $dateOccupationFin;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Chauffeur")
@@ -34,66 +41,12 @@ class VehiculeOccupation
     private $chauffeur;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Vehicule")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Vehicule",inversedBy="vehiculeOccupations")
      */
     private $vehicule;
 
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function __construct()
     {
-        return $this->id;
-    }
-
-    /**
-     * Set dateOccupation
-     *
-     * @param \DateTime $dateOccupation
-     *
-     * @return VehiculeOccupation
-     */
-    public function setDateOccupation($dateOccupation)
-    {
-        $this->dateOccupation = $dateOccupation;
-
-        return $this;
-    }
-
-    /**
-     * Get dateOccupation
-     *
-     * @return \DateTime
-     */
-    public function getDateOccupation()
-    {
-        return $this->dateOccupation;
-    }
-
-    /**
-     * Set chauffeur
-     *
-     * @param \AppBundle\Entity\Chauffeur $chauffeur
-     *
-     * @return VehiculeOccupation
-     */
-    public function setChauffeur(\AppBundle\Entity\Chauffeur $chauffeur = null)
-    {
-        $this->chauffeur = $chauffeur;
-
-        return $this;
-    }
-
-    /**
-     * Get chauffeur
-     *
-     * @return \AppBundle\Entity\Chauffeur
-     */
-    public function getChauffeur()
-    {
-        return $this->chauffeur;
+        $this->dateOccupation= new \DateTime();
     }
 }

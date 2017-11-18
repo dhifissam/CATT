@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Chauffeur;
+use AppBundle\Entity\Pointage;
 use AppBundle\Entity\Salaire;
 use AppBundle\Entity\User;
 use AppBundle\Form\ChauffeurType;
+use AppBundle\Form\PointageType;
 use AppBundle\Form\SalaireType;
 use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -134,10 +136,6 @@ class ChaffeurController extends Controller
         ));
     }
 
-
-
-
-
     /**
      * @Route("/deleteSalaire/{id}", name="salaire_delete")
      */
@@ -148,7 +146,20 @@ class ChaffeurController extends Controller
         if($salaire)
         {
             try{
-                $em->remove($salaire);
+                /**
+                 * @var $salaire Salaire
+                 */
+                $salaire
+                    ->setMontant(0)
+                    ->setAvance(0)
+                    ->setHeureSupp50(0)
+                    ->setHeureSupp75(0)
+                    ->setMonatantDinee(0)
+                    ->setMontantDejeuner(0)
+                    ->setMontantNuitee(0)
+                    ->setNbrJourTravailer(0);
+                $em->persist($salaire);
+                //$em->remove($salaire);
                 $em->flush();
                 $this->addFlash("success", "Votre salaire a été supprimée avec succées");
             }
@@ -166,7 +177,79 @@ class ChaffeurController extends Controller
     }
 
 
+    /**
+     * @Route("/form/{id}/pointages/{id2}", name="chauffeur_form_pointages")
+     */
+    public function pointagesAction($id,$id2=null,Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $chauffeur = $em->getRepository(Chauffeur::class)->find($id);
+        if($id2)
+            $pointage = $em->getRepository(Pointage::class)->find($id2);
+        else
+        {
+            $pointage = new Pointage();
+            $pointage->setChauffeur($chauffeur);
+        }
+        $form = $this->createForm(PointageType::class,$pointage);
+        $form->handleRequest($request);
+        if($form->isSubmitted() and $form->isValid())
+        {
+            /*if(!$id2)
+            {
+                    $this->addFlash("info", "Pointage déjà existant");
+                    return $this->render(":chauffeur:pointages.html.twig", array(
+                        "form" => $form->createView(),
+                        "chauffeur"=>$chauffeur,
+                        "pointage"=>$pointage,
+                        "pointages"=>$em->getRepository(Pointage::class)->findBy(array(
+                            "chauffeur"=>$chauffeur
+                        ))
+                    ));
+            }*/
+            $em->persist($pointage->setChauffeur($chauffeur));
+            $em->flush();
+            $this->addFlash("success", "Votre pointage a été enregistré avec succées");
+            return $this->redirectToRoute("chauffeur_form_pointages",array(
+                "id"=>$id
+            ));
+        }
+        return $this->render(":chauffeur:pointages.html.twig", array(
+            "form" => $form->createView(),
+            "chauffeur"=>$chauffeur,
+            "pointage"=>$pointage,
+            "pointages"=>$em->getRepository(Pointage::class)->findBy(array(
+                "chauffeur"=>$chauffeur
+            ))
+        ));
+    }
 
+    /**
+     * @Route("/deletePointage/{id}", name="pointage_delete")
+     */
+    public function deletePointageAction($id)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $pointage = $em->getRepository(Pointage::class)->find($id);
+        if($pointage)
+        {
+            try{
+                $em->remove($pointage);
+                $em->flush();
+                $this->addFlash("success", "Votre pointage a été supprimée avec succées");
+            }
+            catch (\Exception $exception)
+            {
+                $this->addFlash("danger", "Impossible de supprimer ce pointage");
+            }
+        }
+        /**
+         * @var $pointage Pointage
+         */
+        return $this->redirectToRoute("chauffeur_form_pointages",array(
+            "id"=>$pointage->getChauffeur()->getId()
+        ));
+    }
 
 
 

@@ -8,7 +8,7 @@
          <div class="panel-heading">
              {{ buttons.addItem("Nouveau chauffeur",path("chauffeur_form")) }}
          </div>
-         <table class="table" id="myTable">
+         <table class="table datatable-basic">
              <thead>
              <tr>
                  <th>#</th>
@@ -43,9 +43,18 @@
                      </td>
                      <td>
                          <ul class="icons-list">
-                             <li>{{ buttons.updateAction(path("chauffeur_form",{id:chauffeur.id})) }}</li>
-                             <li>{{ buttons.redirectAction(path("chauffeur_delete",{id:chauffeur.id}),"icon-trash",null,'Etes vous certain de vouloir supprimer ce chauffeur') }}</li>
-                             <li>{{ buttons.redirectAction(path("chauffeur_form_salaires",{id:chauffeur.id}),"icon-coins",null) }}</li>
+                             <li class="dropdown">
+                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                     <i class="icon-menu9"></i>
+                                 </a>
+                                 <ul class="dropdown-menu dropdown-menu-right">
+                          {% if is_granted("ROLE_RESP_TRANSPORT") %}
+                             <li>{{ buttons.redirectAction(path("chauffeur_form",{id:chauffeur.id}),"icon-pencil","Modifier") }}</li>
+                             <li>{{ buttons.redirectAction(path("chauffeur_delete",{id:chauffeur.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer ce chauffeur') }}</li>
+                          {% endif %}
+                             <li>{{ buttons.redirectAction(path("chauffeur_form_salaires",{id:chauffeur.id}),"icon-coins","Salaire") }}</li>
+                                 </ul>
+                             </li>
                          </ul>
                      </td>
                  </tr>
@@ -54,3 +63,6 @@
          </table>
      </div>
  {% endblock %}
+{% block javascripts %}
+    {{ scripts.dataTable() }}
+{% endblock %}

@@ -5,6 +5,7 @@
     <li><a href="#">Entretients</a></li>
 {% endblock %}
  {% block body %}
+     {% if is_granted("ROLE_EXPLOITATION")%}
      <div class="row">
          <div class="col-md-12">
              {{ form_start(form) }}
@@ -13,7 +14,11 @@
                      <div class="row">
                          {{ forms.input("col-md-3","Date Entretient",form.dateEntretient) }}
                          {{ forms.input("col-md-3","Type Entretient",form.typeEntretient) }}
-                         {{ forms.input("col-md-3","Designation",form.designation) }}
+                         {{ forms.input("col-md-3","Fournisseur",form.fournisseur) }}
+                         {{ forms.input("col-md-3","Prix",form.prix) }}
+                     </div>
+                     <div class="row">
+                         {{ forms.input("col-md-12","Designation",form.designation) }}
                      </div>
                      {{ buttons.submitForm() }}
                  </div>
@@ -21,6 +26,7 @@
              {{ form_end(form) }}
          </div>
      </div>
+     {% endif %}
      <div class="row">
          <div class="panel panel-body">
              <table class="table" id="myTable">
@@ -28,8 +34,12 @@
                  <tr>
                      <th>Date Entretient</th>
                      <th>Type Entretient</th>
+                     <th>Fournisseur</th>
+                     <th>Prix</th>
                      <th>Designation</th>
+                     {% if is_granted("ROLE_EXPLOITATION")%}
                      <th>Action</th>
+                     {% endif %}
                  </tr>
                  </thead>
                  <tbody>
@@ -37,12 +47,16 @@
                      <tr>
                          <td>{{ entretient.dateEntretient|date('d/m/Y') }}</td>
                          <td>{{ entretient.typeEntretient}}</td>
+                         <td>{{ entretient.fournisseur }}</td>
+                         <td>{{ entretient.prix }}</td>
                          <td>{{ entretient.designation }}</td>
                          <td>
+                             {% if is_granted("ROLE_EXPLOITATION")%}
                              <ul class="icons-list">
                                  <li>{{ buttons.updateAction(path("vehicule_form_entretients",{id:vehicule.id, id2:entretient.id})) }}</li>
-                                 <li>{{ buttons.redirectAction(path("vehicule_entretient_delete",{id:entretient.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer ce bon') }}</li>
+                                 <li>{{ buttons.redirectAction(path("vehicule_entretient_delete",{id:entretient.id}),"icon-trash",null,'Etes vous certain de vouloir supprimer ce bon') }}</li>
                              </ul>
+                             {% endif %}
                          </td>
                      </tr>
                  {% endfor %}

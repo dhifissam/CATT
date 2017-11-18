@@ -24,9 +24,16 @@ class VehiculeOccupation
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateOccupation", type="datetime")
+     * @ORM\Column(name="dateOccupation", type="date")
      */
     private $dateOccupation;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateOccupationFin", type="date" ,nullable=true)
+     */
+    private $dateOccupationFin;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Chauffeur")
@@ -40,14 +47,13 @@ class VehiculeOccupation
 
     public function __construct()
     {
-        $this->dateOccupation= new \DateTime();
+        //$this->dateOccupation= new \DateTime();
     }
-
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -76,6 +82,30 @@ class VehiculeOccupation
     public function getDateOccupation()
     {
         return $this->dateOccupation;
+    }
+
+    /**
+     * Set dateOccupationFin
+     *
+     * @param \DateTime $dateOccupationFin
+     *
+     * @return VehiculeOccupation
+     */
+    public function setDateOccupationFin($dateOccupationFin)
+    {
+        $this->dateOccupationFin = $dateOccupationFin;
+
+        return $this;
+    }
+
+    /**
+     * Get dateOccupationFin
+     *
+     * @return \DateTime
+     */
+    public function getDateOccupationFin()
+    {
+        return $this->dateOccupationFin;
     }
 
     /**

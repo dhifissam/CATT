@@ -36,26 +36,32 @@
                      <td>{{ mission.showEtat|raw }}</td>
                      <td>{{ mission.prix}}</td>
                      <td>
-                         <ul class="icons-list">
-                             <li class="dropdown">
-                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                     <i class="icon-menu9"></i>
-                                 </a>
-                                 <ul class="dropdown-menu dropdown-menu-right">
-                                     <li>{{ buttons.redirectAction(path("mission_form",{id:mission.id}),"icon-pencil","Modifier") }}</li>
-                                     <li>{{ buttons.redirectAction(path("mission_delete",{id:mission.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer cette mission') }}</li>
-                                     {% if mission.etat ==2 %}
-                                         <li>{{ buttons.redirectAction(path("mission_terminer",{id:mission.id})," icon-minus-circle2","Terminer") }}</li>
-                                     {% endif %}
-                                     {% if mission.etat != 3 %}
-                                         <li>{{ buttons.redirectAction(path("mission_annuler",{id:mission.id})," icon-cross","Annuler") }}</li>
-                                     {% endif %}
-                                     {% if mission.etat ==1 %}
-                                         <li>{{ buttons.redirectAction(path("mission_valider",{id:mission.id})," icon-check","Valider") }}</li>
-                                     {% endif %}
-                                 </ul>
-                             </li>
-                         </ul>
+                         {% if mission.etat!=4 %}
+                             <ul class="icons-list">
+                                 <li class="dropdown">
+                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                         <i class="icon-menu9"></i>
+                                     </a>
+                                     <ul class="dropdown-menu dropdown-menu-right">
+
+                                             <li>{{ buttons.redirectAction(path("mission_form",{id:mission.id}),"icon-pencil","Modifier") }}</li>
+                                             {% if is_granted("ROLE_RESP_TRANSPORT") %}
+                                                 <li>{{ buttons.redirectAction(path("mission_delete",{id:mission.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer cette mission') }}</li>
+                                                 {% if mission.etat ==2 %}
+                                                     <li>{{ buttons.redirectAction(path("mission_terminer",{id:mission.id})," icon-minus-circle2","Terminer") }}</li>
+                                                 {% endif %}
+                                                 {% if mission.etat != 3 %}
+                                                     <li>{{ buttons.redirectAction(path("mission_annuler",{id:mission.id})," icon-cross","Annuler") }}</li>
+                                                 {% endif %}
+                                                 {% if mission.etat ==1 %}
+                                                     <li>{{ buttons.redirectAction(path("mission_valider",{id:mission.id})," icon-check","Valider") }}</li>
+                                                 {% endif %}
+                                             {% endif %}
+
+                                     </ul>
+                                 </li>
+                             </ul>
+                         {% endif %}
                      </td>
                  </tr>
              {% endfor %}

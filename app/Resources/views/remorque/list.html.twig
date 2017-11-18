@@ -38,9 +38,23 @@
                      </td>
                      <td>
                          <ul class="icons-list">
-                             <li>{{ buttons.updateAction(path("remorque_form",{id:remorque.id})) }}</li>
-                             <li>{{ buttons.redirectAction(path("remorque_delete",{id:remorque.id}),"icon-trash",null,'Etes vous certain de vouloir supprimer cette remorque') }}</li>
-                              <li>{{ buttons.redirectAction(path("remorque_form_entretients",{id:remorque.id}),"icon-hammer-wrench",null) }}</li>
+                             <li class="dropdown">
+                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                     <i class="icon-menu9"></i>
+                                 </a>
+                                 <ul class="dropdown-menu dropdown-menu-right">
+                    {% if is_granted("ROLE_RESP_TRANSPORT")%}
+                             <li>{{ buttons.redirectAction(path("remorque_form",{id:remorque.id}),"icon-pencil","Modifier") }}</li>
+                             <li>{{ buttons.redirectAction(path("remorque_delete",{id:remorque.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer cette remorque') }}</li>
+                    {% endif %}
+                    {% if is_granted("ROLE_EXPLOITATION") or is_granted("ROLE_RESP_TRANSPORT") %}
+                             <li>{{ buttons.redirectAction(path("remorque_form_entretients",{id:remorque.id}),"icon-hammer-wrench","Entretients") }}</li>
+                    {% endif %}
+                    {% if is_granted("ROLE_RESP_TRANSPORT") or is_granted("ROLE_EXPLOITATION")%}
+                             <li>{{ buttons.redirectAction(path("remorque_form_visiteTechniques",{id:remorque.id}),"icon-steering-wheel","Visites Techniques") }}</li>
+                             <li>{{ buttons.redirectAction(path("remorque_form_permisCirculations",{id:remorque.id}),"icon-steering-wheel","Permis de Circulation") }}</li>                                 </ul>
+                    {% endif %}
+                             </li>
                          </ul>
                      </td>
                  </tr>

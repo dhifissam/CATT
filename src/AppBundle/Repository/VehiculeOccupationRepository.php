@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\Vehicule;
+use AppBundle\Entity\VehiculeOccupation;
 
 /**
  * VehiculeOccupationRepository
@@ -10,4 +12,19 @@ namespace AppBundle\Repository;
  */
 class VehiculeOccupationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function updateChauffeursEncours(Vehicule $vehicule,$dateFinOccupation)
+    {
+        $qb =$this->createQueryBuilder("vo");
+        $qb
+            ->update(VehiculeOccupation::class,"vo")
+            ->set('vo.dateOccupationFin',$qb->expr()->literal($dateFinOccupation->format('Y-m-d')))
+            ->where("vo.vehicule = :idVehicule")
+            ->andWhere($qb->expr()->isNull("vo.dateOccupationFin"))
+            ->setParameters(array(
+                'idVehicule'=>$vehicule->getId(),
+                //"dateFinOccupation"=>$dateFinOccupation
+            ))
+        ;
+        $qb->getQuery()->execute();
+    }
 }

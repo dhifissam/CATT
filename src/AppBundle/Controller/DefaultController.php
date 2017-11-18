@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Mission;
+use AppBundle\Entity\PermisCirculation;
 use AppBundle\Entity\Vehicule;
 use AppBundle\Entity\VisiteTechnique;
 use AppBundle\Entity\Voyage;
+use AppBundle\Form\PermisCirculationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,11 +26,15 @@ class DefaultController extends Controller
         $missionsTommorow = $em->getRepository(Mission::class)->getMissionTomorrow();
         $visitesVehicule= $em->getRepository(VisiteTechnique::class)->getVisiteThisMonthVehicule();
         $visitesRemorque= $em->getRepository(VisiteTechnique::class)->getVisiteThisMonthRemorque();
+        $permisVehicule= $em->getRepository(PermisCirculation::class)->getPermisThisMonthVehicule();
+        $permisRemorque= $em->getRepository(PermisCirculation::class)->getPermisThisMonthRemorque();
         return $this->render('dashbord/index.html.twig',array(
             'missionsToDay'=>$missionsToDay,
             'missionsTommorow'=>$missionsTommorow,
             'visitesVehicule'=>$visitesVehicule,
-            'visitesRemorque'=>$visitesRemorque
+            'visitesRemorque'=>$visitesRemorque,
+            'permisVehicule'=>$permisVehicule,
+            'permisRemorque'=>$permisRemorque
         ));
     }
 

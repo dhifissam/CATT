@@ -4,9 +4,10 @@ security:
 
     role_hierarchy:
         ROLE_RESP_TRANSPORT:   ROLE_USER
+        ROLE_CORDINATOR:   ROLE_USER
         ROLE_EXPLOITATION: ROLE_USER
-        ROLE_RESPONSABLE_SALAIRE:         ROLE_USER
-        ROLE_ADMIN: ROLE_ADMIN,ROLE_RESP_TRANSPORT,ROLE_EXPLOITATION,ROLE_RH
+        ROLE_RESPONSABLE_SALAIRE: ROLE_USER
+        ROLE_ADMIN: ROLE_ADMIN,ROLE_RESP_TRANSPORT,ROLE_EXPLOITATION,ROLE_RESPONSABLE_SALAIRE,ROLE_CORDINATOR
 
     providers:
         fos_userbundle:
@@ -22,7 +23,16 @@ security:
             anonymous:    true
 
     access_control:
-        - { path: ^/api, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/mission, roles: [ROLE_RESP_TRANSPORT,ROLE_CORDINATOR] }
+        - { path: ^/chauffeur, roles: [ROLE_ADMIN,ROLE_RESPONSABLE_SALAIRE,ROLE_RESP_TRANSPORT,ROLE_CORDINATOR]}
+        - { path: ^/salaires, roles: [ROLE_ADMIN,ROLE_RESPONSABLE_SALAIRE]}
+        - { path: ^/client, roles:  [ROLE_EXPLOITATION] }
+        - { path: ^/marque, roles: [ROLE_EXPLOITATION] }
+        - { path: ^/depot, roles: [ROLE_EXPLOITATION]}
+        - { path: ^/typeEntretient, roles: [ROLE_EXPLOITATION]}
+        - { path: ^/user, roles: [ROLE_ADMIN]}
+        - { path: ^/remorque, roles: [ROLE_RESP_TRANSPORT,ROLE_EXPLOITATION] }
+        - { path: ^/vehicule, roles: [ROLE_RESP_TRANSPORT,ROLE_EXPLOITATION,ROLE_CORDINATOR] }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }

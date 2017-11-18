@@ -3,15 +3,21 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Salaire
+ * Pointage
  *
- * @ORM\Table(name="salaire")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\SalaireRepository")
+ * @ORM\Table(name="pointage")
+ * @UniqueEntity(
+ *     fields={"chauffeur", "date"},
+ *     errorPath="date",
+ *     message="Vous avez fait ce pointage pour ce chauffeur"
+ * )
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PointageRepository")
  */
-class Salaire
+class Pointage
 {
     /**
      * @var int
@@ -21,41 +27,13 @@ class Salaire
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="montant", type="decimal",precision=7,scale=3)
-     */
-    private $montant;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="avance", type="decimal",precision=7,scale=3,nullable=true)
-     */
-    private $avance;
-
+    
     /**
      * @var int
      *
-     * @ORM\Column(name="annee", type="integer")
+     * @ORM\Column(name="date_pointage", type="date")
      */
-    private $annee;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="mois", type="integer")
-     */
-    private $mois;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="nbrJourTravailer", type="integer")
-     */
-    private $nbrJourTravailer;
+    private $date;
 
     /**
      * @var int
@@ -92,18 +70,21 @@ class Salaire
      */
     private $heureSupp75;
 
-
-
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Chauffeur")
      */
     private $chauffeur;
 
+    public function __construct()
+    {
+        $this->date= new \DateTime();
+    }
+
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -111,51 +92,27 @@ class Salaire
     }
 
     /**
-     * Set montant
+     * Set date
      *
-     * @param float $montant
+     * @param \DateTime $date
      *
-     * @return Salaire
+     * @return Pointage
      */
-    public function setMontant($montant)
+    public function setDate($date)
     {
-        $this->montant = $montant;
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get montant
+     * Get date
      *
-     * @return float
+     * @return \DateTime
      */
-    public function getMontant()
+    public function getDate()
     {
-        return $this->montant;
-    }
-
-    /**
-     * Set nbrJourTravailer
-     *
-     * @param integer $nbrJourTravailer
-     *
-     * @return Salaire
-     */
-    public function setNbrJourTravailer($nbrJourTravailer)
-    {
-        $this->nbrJourTravailer = $nbrJourTravailer;
-
-        return $this;
-    }
-
-    /**
-     * Get nbrJourTravailer
-     *
-     * @return int
-     */
-    public function getNbrJourTravailer()
-    {
-        return $this->nbrJourTravailer;
+        return $this->date;
     }
 
     /**
@@ -163,7 +120,7 @@ class Salaire
      *
      * @param integer $montantDejeuner
      *
-     * @return Salaire
+     * @return Pointage
      */
     public function setMontantDejeuner($montantDejeuner)
     {
@@ -175,7 +132,7 @@ class Salaire
     /**
      * Get montantDejeuner
      *
-     * @return int
+     * @return integer
      */
     public function getMontantDejeuner()
     {
@@ -187,7 +144,7 @@ class Salaire
      *
      * @param integer $monatantDinee
      *
-     * @return Salaire
+     * @return Pointage
      */
     public function setMonatantDinee($monatantDinee)
     {
@@ -199,7 +156,7 @@ class Salaire
     /**
      * Get monatantDinee
      *
-     * @return int
+     * @return integer
      */
     public function getMonatantDinee()
     {
@@ -211,7 +168,7 @@ class Salaire
      *
      * @param integer $montantNuitee
      *
-     * @return Salaire
+     * @return Pointage
      */
     public function setMontantNuitee($montantNuitee)
     {
@@ -223,7 +180,7 @@ class Salaire
     /**
      * Get montantNuitee
      *
-     * @return int
+     * @return integer
      */
     public function getMontantNuitee()
     {
@@ -235,7 +192,7 @@ class Salaire
      *
      * @param float $heureSupp50
      *
-     * @return Salaire
+     * @return Pointage
      */
     public function setHeureSupp50($heureSupp50)
     {
@@ -259,7 +216,7 @@ class Salaire
      *
      * @param float $heureSupp75
      *
-     * @return Salaire
+     * @return Pointage
      */
     public function setHeureSupp75($heureSupp75)
     {
@@ -283,7 +240,7 @@ class Salaire
      *
      * @param \AppBundle\Entity\Chauffeur $chauffeur
      *
-     * @return Salaire
+     * @return Pointage
      */
     public function setChauffeur(\AppBundle\Entity\Chauffeur $chauffeur = null)
     {
@@ -300,77 +257,5 @@ class Salaire
     public function getChauffeur()
     {
         return $this->chauffeur;
-    }
-
-    /**
-     * Set annee
-     *
-     * @param integer $annee
-     *
-     * @return Salaire
-     */
-    public function setAnnee($annee)
-    {
-        $this->annee = $annee;
-
-        return $this;
-    }
-
-    /**
-     * Get annee
-     *
-     * @return integer
-     */
-    public function getAnnee()
-    {
-        return $this->annee;
-    }
-
-    /**
-     * Set mois
-     *
-     * @param integer $mois
-     *
-     * @return Salaire
-     */
-    public function setMois($mois)
-    {
-        $this->mois = $mois;
-
-        return $this;
-    }
-
-    /**
-     * Get mois
-     *
-     * @return integer
-     */
-    public function getMois()
-    {
-        return $this->mois;
-    }
-
-    /**
-     * Set avance
-     *
-     * @param string $avance
-     *
-     * @return Salaire
-     */
-    public function setAvance($avance)
-    {
-        $this->avance = $avance;
-
-        return $this;
-    }
-
-    /**
-     * Get avance
-     *
-     * @return string
-     */
-    public function getAvance()
-    {
-        return $this->avance;
     }
 }

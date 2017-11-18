@@ -18,15 +18,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
 
             //Extras Bundle
-            new FOS\UserBundle\FOSUserBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle(),
-            new FOS\RestBundle\FOSRestBundle(),
-            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
-            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-            new Liuggio\ExcelBundle\LiuggioExcelBundle(),
-            new Nelmio\CorsBundle\NelmioCorsBundle(),
-            new Circle\RestClientBundle\CircleRestClientBundle(),
-            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new FOS\UserBundle\FOSUserBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

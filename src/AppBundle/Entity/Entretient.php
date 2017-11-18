@@ -36,7 +36,21 @@ class Entretient
     /**
      * @var string
      *
-     * @ORM\Column(name="designation", type="string", length=255)
+     * @ORM\Column(name="prix", type="decimal", precision=10, scale=3)
+     */
+    private $prix  ;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fournisseur", type="string", length=255)
+     */
+    private $fournisseur;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="designation", type="text",nullable=true)
      */
     private $designation;
 
@@ -180,4 +194,55 @@ class Entretient
     {
         return $this->vehicule;
     }
+
+    /**
+     * Set fournisseur
+     *
+     * @param string $fournisseur
+     *
+     * @return Entretient
+     */
+    public function setFournisseur($fournisseur)
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get fournisseur
+     *
+     * @return string
+     */
+    public function getFournisseur()
+    {
+        return $this->fournisseur;
+    }
+
+
+    /**
+     * Set prix
+     *
+     * @param integer $prix
+     *
+     * @return Entretient
+     */
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * Get prix
+     *
+     * @return integer
+     */
+    public function getPrix()
+    {
+        return $this->prix;
+    }
+
+
 }

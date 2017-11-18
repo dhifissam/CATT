@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Client
@@ -23,7 +24,7 @@ class Client
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nom;
@@ -51,7 +52,7 @@ class Client
 
     /**
      * @var string
-     *
+     * @Assert\Email()
      * @ORM\Column(name="email", type="string", length=255,nullable=true)
      */
     private $email;
@@ -59,7 +60,7 @@ class Client
     /**
      * @var string
      *
-     * @ORM\Column(name="matriculeFiscale", type="string", length=255,nullable=true)
+     * @ORM\Column(name="matriculeFiscale", type="string", length=255,unique=true)
      */
     private $matriculeFiscale;
 

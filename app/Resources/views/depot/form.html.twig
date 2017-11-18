@@ -11,10 +11,11 @@
              <div class="panel panel-flat">
                  <div class="panel-body">
                      <div class="row">
+                         {{ forms.input("col-md-4","Code",form.code) }}
                          {{ forms.input("col-md-4","Libellé",form.libelle) }}
                      </div>
                      <div class="row">
-                         {{ forms.input("col-md-12","Adresse",form.adresse) }}
+                         {{ forms.input("col-md-8","Adresse",form.adresse) }}
                      </div>
                      {{ buttons.submitForm() }}
                  </div>

@@ -42,12 +42,21 @@
                                      <i class="icon-menu9"></i>
                                  </a>
                                  <ul class="dropdown-menu dropdown-menu-right">
+                                 {% if is_granted("ROLE_RESP_TRANSPORT")%}
                                      <li>{{ buttons.redirectAction(path("vehicule_form",{id:vehicule.id}),"icon-pencil","Modifier") }}</li>
                                      <li>{{ buttons.redirectAction(path("vehicule_delete",{id:vehicule.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer cette vehicule') }}</li>
+                                 {% endif %}
+                                 {% if is_granted("ROLE_CORDINATOR") or is_granted("ROLE_RESP_TRANSPORT") %}
                                      <li>{{ buttons.redirectAction(path("vehicule_form_chauffeurs",{id:vehicule.id}),"icon-users","Chauffeurs") }}</li>
+                                 {% endif %}
+                                 {% if is_granted("ROLE_EXPLOITATION") or  is_granted("ROLE_RESP_TRANSPORT") %}
                                      <li>{{ buttons.redirectAction(path("vehicule_form_carburants",{id:vehicule.id})," icon-gas","Carburants") }}</li>
                                      <li>{{ buttons.redirectAction(path("vehicule_form_entretients",{id:vehicule.id}),"icon-hammer-wrench","Entretients") }}</li>
-                                     <li>{{ buttons.redirectAction(path("vehicule_form_visiteTechniques",{id:vehicule.id}),"icon-hammer-wrench","Visites techniques") }}</li>
+                                 {% endif %}
+                                 {% if is_granted("ROLE_RESP_TRANSPORT") or is_granted("ROLE_EXPLOITATION")%}
+                                     <li>{{ buttons.redirectAction(path("vehicule_form_visiteTechniques",{id:vehicule.id}),"icon-steering-wheel","Visites techniques") }}</li>
+                                     <li>{{ buttons.redirectAction(path("vehicule_form_permisCirulations",{id:vehicule.id}),"icon-steering-wheel","Permis de circulation") }}</li>
+                                 {% endif %}
                                  </ul>
                              </li>
                          </ul>

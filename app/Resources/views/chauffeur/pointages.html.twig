@@ -12,9 +12,6 @@
                     <div class="panel panel-flat">
                         <div class="panel-body">
                             <div class="row">
-                                {{ forms.input("col-md-3","Salaire",form.montant) }}
-                                {{ forms.input("col-md-3","Avance",form.avance) }}
-                                {{ forms.input("col-md-3","Nombre de jour Travailler",form.nbrJourTravailer) }}
                                 {{ forms.input("col-md-3","Montant Dejeunee",form.montantDejeuner) }}
                                 {{ forms.input("col-md-3","Montant Dinee",form.monatantDinee) }}
                                 {{ forms.input("col-md-3","Montant Nuitee",form.montantNuitee) }}
@@ -22,8 +19,7 @@
                                 {{ forms.input("col-md-3","Heure Supplimantaire 75%",form.heureSupp75) }}
                             </div>
                             <div class="row">
-                                {{ forms.input("col-md-3","Mois",form.mois) }}
-                                {{ forms.input("col-md-3","Année",form.annee) }}
+                                {{ forms.input("col-md-3","Date",form.date) }}
                             </div>
                             {{ buttons.submitForm() }}
                         </div>
@@ -37,37 +33,31 @@
                     <table class="table" id="myTable">
                         <thead>
                         <tr>
-                            <th>Mois</th>
-                            <th>Salaire</th>
-                            <th>Nombre de Jour Travailler</th>
+                            <th>Date</th>
                             <th>Montant Dejeunee</th>
                             <th>Montant Dinee</th>
                             <th>Montant Nuitee</th>
                             <th>Heure Supplimantaire 50%</th>
                             <th>Heure Supplimantaire 75%</th>
-                            <th>Avance</th>
                             {% if is_granted("ROLE_RESPONSABLE_SALAIRE")%}
                             <th>Action</th>
                             {% endif %}
                         </tr>
                         </thead>
                         <tbody>
-                        {% for salaire in salaires %}
+                        {% for pointage in pointages %}
                             <tr>
-                                <td>{{ salaire.mois }}/{{ salaire.annee }}</td>
-                                <td>{{ salaire.montant }}</td>
-                                <td>{{ salaire.nbrJourTravailer }}</td>
-                                <td>{{ salaire.montantDejeuner }}</td>
-                                <td>{{ salaire.monatantDinee }}</td>
-                                <td>{{ salaire.montantNuitee }}</td>
-                                <td>{{ salaire.heureSupp50}}</td>
-                                <td>{{ salaire.heureSupp75 }}</td>
-                                <td>{{ salaire.avance }}</td>
+                                <td>{{ pointage.date|date("d/m/Y") }}</td>
+                                <td>{{ pointage.montantDejeuner }}</td>
+                                <td>{{ pointage.monatantDinee }}</td>
+                                <td>{{ pointage.montantNuitee }}</td>
+                                <td>{{ pointage.heureSupp50}}</td>
+                                <td>{{ pointage.heureSupp75 }}</td>
                                 <td>
                                     {% if is_granted("ROLE_RESPONSABLE_SALAIRE")%}
                                     <ul class="icons-list">
-                                        <li>{{ buttons.updateAction(path("chauffeur_form_salaires",{ id:chauffeur.id , id2:salaire.id})) }}</li>
-                                        <li>{{ buttons.redirectAction(path("salaire_delete",{id:salaire.id}),"icon-trash",null,'Etes vous certain de vouloir supprimer ce bon') }}</li>
+                                        <li>{{ buttons.updateAction(path("chauffeur_form_pointages",{ id:chauffeur.id , id2:pointage.id})) }}</li>
+                                        <li>{{ buttons.redirectAction(path("pointage_delete",{id:pointage.id}),"icon-trash",null,'Etes vous certain de vouloir supprimer ce bon') }}</li>
                                     </ul>
                                     {% endif %}
                                 </td>
@@ -77,15 +67,4 @@
                     </table>
                 </div>
             </div>
-            {% endblock %}
-            {% block javascripts %}
-                {{ scripts.form() }}
-                {% if salaire.id is not null %}
-                    <script>
-                        $(document).ready(function(){
-                            $("#appbundle_salaire_mois").attr("disabled",true);
-                            $("#appbundle_salaire_annee").attr("disabled",true);
-                        })
-                    </script>
-                {% endif %}
             {% endblock %}

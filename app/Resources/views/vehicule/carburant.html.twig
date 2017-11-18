@@ -5,6 +5,7 @@
     <li><a href="#">Carburants</a></li>
 {% endblock %}
  {% block body %}
+  {% if is_granted("ROLE_EXPLOITATION")%}
      <div class="row">
          <div class="col-md-12">
              {{ form_start(form) }}
@@ -22,6 +23,7 @@
              {{ form_end(form) }}
          </div>
      </div>
+  {% endif %}
      <div class="row">
          <div class="panel panel-body">
              <table class="table" id="myTable">
@@ -31,7 +33,9 @@
                      <th>Kilometrage</th>
                      <th>Litre</th>
                      <th>Montant</th>
+                     {% if is_granted("ROLE_EXPLOITATION")%}
                      <th>Action</th>
+                     {% endif %}
                  </tr>
                  </thead>
                  <tbody>
@@ -42,10 +46,12 @@
                          <td>{{ carburant.litre }}</td>
                          <td>{{ carburant.montant }}</td>
                          <td>
+                      {% if is_granted("ROLE_EXPLOITATION")%}
                              <ul class="icons-list">
                                  <li>{{ buttons.updateAction(path("vehicule_form_carburants",{id:vehicule.id, id2:carburant.id})) }}</li>
-                                 <li>{{ buttons.redirectAction(path("vehicule_carburant_delete",{id:carburant.id}),"icon-trash","Supprimer",'Etes vous certain de vouloir supprimer ce bon') }}</li>
+                                 <li>{{ buttons.redirectAction(path("vehicule_carburant_delete",{id:carburant.id}),"icon-trash",null,'Etes vous certain de vouloir supprimer ce bon') }}</li>
                              </ul>
+                      {% endif %}
                          </td>
                      </tr>
                  {% endfor %}

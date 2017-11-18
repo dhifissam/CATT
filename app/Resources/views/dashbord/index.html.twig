@@ -35,6 +35,7 @@
                             </tr>
                         {% endif %}
                         {% for mission in missionsToDay %}
+                            <tr>
                             <td>{{ mission.date|date('Y-m-d') }}</td>
                             <td>{{ mission.client}}</td>
                             <td>{{ mission.vehicule}}</td>
@@ -43,6 +44,7 @@
                             <td>{{ mission.depotDechargement}}</td>
                             <td>{{ mission.validateur}}</td>
                             <td>{{ mission.showEtat|raw }}</td>
+                            </tr>
                         {% endfor %}
                         {% if missionsTommorow|length>0 %}
                             <tr class="active border-double">
@@ -53,6 +55,7 @@
                             </tr>
                         {% endif %}
                         {% for mission in missionsTommorow %}
+                            <tr>
                             <td>{{ mission.date|date('Y-m-d') }}</td>
                             <td>{{ mission.client}}</td>
                             <td>{{ mission.vehicule}}</td>
@@ -61,6 +64,7 @@
                             <td>{{ mission.depotDechargement}}</td>
                             <td>{{ mission.validateur}}</td>
                             <td>{{ mission.showEtat|raw }}</td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
@@ -106,7 +110,54 @@
                         {% for visite in visitesRemorque %}
                             <tr>
                                 <td>{{ visite.prochaineDate|date('d/m/Y') }}</td>
-                                <td>{{ visite.vehicule}}</td>
+                                <td>{{ visite.remorque}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">Permis de circulation <strong>[{{ "now"|date("F") }}]</strong></h6>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-nowrap">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if permisVehicule|length>0 %}
+                            <tr class="active border-double">
+                                <td colspan="5">Vehicules</td>
+                                <td class="text-right">
+                                    <span class="progress-meter" id="today-progress" data-progress="30"></span>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% for permis in permisVehicule %}
+                            <tr>
+                                <td>{{ permis.prochaineDate|date('d/m/Y') }}</td>
+                                <td>{{ permis.vehicule}}</td>
+                            </tr>
+                        {% endfor %}
+                        {% if permisRemorque|length>0 %}
+                            <tr class="active border-double">
+                                <td colspan="5">Remorques</td>
+                                <td class="text-right">
+                                    <span class="progress-meter" id="today-progress" data-progress="30"></span>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% for permis in permisRemorque %}
+                            <tr>
+                                <td>{{ permis.prochaineDate|date('d/m/Y') }}</td>
+                                <td>{{ permis.remorque}}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

@@ -1,11 +1,11 @@
-{% extends ":vehicule:form.html.twig" %}
+{% extends ":remorque:form.html.twig" %}
 {% block title %}Visites Techniques{% endblock %}
 {% block breadcrumb %}
     {{ parent() }}
     <li><a href="#">Visites Techniques</a></li>
 {% endblock %}
  {% block body %}
-    {% if is_granted("ROLE_EXPLOITATION")%}
+     {% if is_granted("ROLE_EXPLOITATION")%}
      <div class="row">
          <div class="col-md-12">
              {{ form_start(form) }}
@@ -21,7 +21,7 @@
              {{ form_end(form) }}
          </div>
      </div>
-    {% endif %}
+     {% endif %}
      <div class="row">
          <div class="panel panel-body">
              <table class="table" id="myTable">
@@ -35,15 +35,15 @@
                  </tr>
                  </thead>
                  <tbody>
-                 {% for entretient  in vehicule.visitesTechniques %}
+                 {% for entretient  in remorque.visitesTechniques %}
                      <tr>
                          <td>{{ entretient.date|date('d/m/Y') }}</td>
                          <td>{{ entretient.prochaineDate|date('d/m/Y') }}</td>
                          <td>
                              {% if is_granted("ROLE_EXPLOITATION")%}
                              <ul class="icons-list">
-                                 <li>{{ buttons.updateAction(path("vehicule_form_visiteTechniques",{id:vehicule.id, id2:entretient.id})) }}</li>
-                                 <li>{{ buttons.redirectAction(path("vehicule_visiteTechnique_delete",{id:entretient.id}),"icon-trash",null,'Etes vous certain de vouloir supprimer ce bon') }}</li>
+                                 <li>{{ buttons.updateAction(path("remorque_form_visiteTechniques",{id:remorque.id, id2:entretient.id})) }}</li>
+                                 <li>{{ buttons.redirectAction(path("remorque_visiteTechnique_delete",{id:entretient.id}),"icon-trash",null,'Etes vous certain de vouloir supprimer cette visite technique') }}</li>
                              </ul>
                              {% endif %}
                          </td>

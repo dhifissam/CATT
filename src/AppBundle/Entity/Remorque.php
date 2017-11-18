@@ -66,6 +66,13 @@ class Remorque
     private $visitesTechniques;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PermisCirculation",mappedBy="remorque")
+     * @ORM\OrderBy({"date" ="DESC"})
+     */
+    private $permisCirculations;
+
+
 
     /**
      * Get id
@@ -289,5 +296,39 @@ class Remorque
     public function getVisitesTechniques()
     {
         return $this->visitesTechniques;
+    }
+
+    /**
+     * Add permisCirculation
+     *
+     * @param \AppBundle\Entity\PermisCirculation $permisCirculation
+     *
+     * @return Remorque
+     */
+    public function addPermisCirculation(\AppBundle\Entity\PermisCirculation $permisCirculation)
+    {
+        $this->permisCirculations[] = $permisCirculation;
+
+        return $this;
+    }
+
+    /**
+     * Remove permisCirculation
+     *
+     * @param \AppBundle\Entity\PermisCirculation $permisCirculation
+     */
+    public function removePermisCirculation(\AppBundle\Entity\PermisCirculation $permisCirculation)
+    {
+        $this->permisCirculations->removeElement($permisCirculation);
+    }
+
+    /**
+     * Get permisCirculations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPermisCirculations()
+    {
+        return $this->permisCirculations;
     }
 }

@@ -4,16 +4,19 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Carburant;
 use AppBundle\Entity\Entretient;
+use AppBundle\Entity\PermisCirculation;
 use AppBundle\Entity\Vehicule;
 use AppBundle\Entity\VisiteTechnique;
 use AppBundle\Entity\User;
 use AppBundle\Entity\VehiculeOccupation;
 use AppBundle\Form\CarburantType;
 use AppBundle\Form\EntretientType;
+use AppBundle\Form\PermisCirculationType;
 use AppBundle\Form\VehiculeOccupationType;
 use AppBundle\Form\VehiculeType;
 use AppBundle\Form\VisiteTechniqueType;
 use AppBundle\Form\UserType;
+use Symfony\Component\Form\FormError;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -104,6 +107,11 @@ class VehiculeController extends Controller
         $form->handleRequest($request);
         if($form->isSubmitted() and $form->isValid())
         {
+            $dateFin = clone ($vehiculeOccupation->getDateOccupation());
+            $dateFin->modify("-1 day");
+            $em
+                ->getRepository(VehiculeOccupation::class)
+                ->updateChauffeursEncours($vehicule,$dateFin);
             $em->persist($vehiculeOccupation->setVehicule($vehicule));
             $em->flush();
             $this->addFlash("success", "Votre chauffeur a été enregistré avec succées");
@@ -161,12 +169,22 @@ class VehiculeController extends Controller
         $form->handleRequest($request);
         if($form->isSubmitted() and $form->isValid())
         {
-            $em->persist($carburant->setVehicule($vehicule));
-            $em->flush();
-            $this->addFlash("success", "Votre Bon a été enregistré avec succées");
-            return $this->redirectToRoute("vehicule_form_carburants",array(
-                "id"=>$id
+            $lastCarburant=$em->getRepository(Carburant::class)->findOneBy(array(
+                'vehicule'=>$vehicule
+            ),array(
+                'kilometrage'=>"desc"
             ));
+            if($lastCarburant and $lastCarburant->getKilometrage()>$carburant->getKilometrage())
+                $form->get('kilometrage')->addError(new FormError('Kilometrage incorrecte'));
+            else
+            {
+                $em->persist($carburant->setVehicule($vehicule));
+                $em->flush();
+                $this->addFlash("success", "Votre Bon a été enregistré avec succées");
+                return $this->redirectToRoute("vehicule_form_carburants",array(
+                    "id"=>$id
+                ));
+            }
         }
         return $this->render(":vehicule:carburant.html.twig", array(
             "form" => $form->createView(),
@@ -245,7 +263,14 @@ class VehiculeController extends Controller
         if($entretient)
         {
             try{
-                $em->remove($entretient);
+                /**
+                 * @var $entretient Entretient
+                 */
+                $entretient
+                    ->setPrix(0)
+                    ->setFournisseur(" ")
+                    ->setDesignation(" ") ;
+                $em->persist($entretient);
                 $em->flush();
                 $this->addFlash("success", "Votre entretient a été supprimée avec succées");
             }
@@ -290,8 +315,6 @@ class VehiculeController extends Controller
         ));
     }
 
-
-
     /**
      * @Route("/deletevisiteTechnique/{id}", name="vehicule_visiteTechnique_delete")
      */
@@ -316,6 +339,62 @@ class VehiculeController extends Controller
          */
         return $this->redirectToRoute("vehicule_form_visiteTechniques",array(
             "id"=>$visiteTechnique->getVehicule()->getId()
+        ));
+    }
+
+
+    /**
+     * @Route("/form/{id}/permisCirulations/{id2}", name="vehicule_form_permisCirulations")
+     */
+    public function indexPermisCirulationAction($id,$id2=null,Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $vehicule = $em->getRepository(Vehicule::class)->find($id);
+        if($id2)
+            $permisCirulation = $em->getRepository(PermisCirculation::class)->find($id2);
+        else
+            $permisCirulation = new PermisCirculation();
+        $form = $this->createForm(PermisCirculationType::class,$permisCirulation);
+        $form->handleRequest($request);
+        if($form->isSubmitted() and $form->isValid())
+        {
+            $em->persist($permisCirulation->setVehicule($vehicule));
+            $em->flush();
+            $this->addFlash("success", "Votre Bon a été enregistré avec succées");
+            return $this->redirectToRoute("vehicule_form_permisCirulations",array(
+                "id"=>$id
+            ));
+        }
+        return $this->render(":vehicule:permisCirculation.html.twig", array(
+            "form" => $form->createView(),
+            "vehicule"=>$vehicule
+        ));
+    }
+
+    /**
+     * @Route("/deletepermisCirulation/{id}", name="vehicule_permisCirulation_delete")
+     */
+    public function deletePermisCirulationAction($id)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $permisCirulation = $em->getRepository(PermisCirculation::class)->find($id);
+        if($permisCirulation)
+        {
+            try{
+                $em->remove($permisCirulation);
+                $em->flush();
+                $this->addFlash("success", "Votre permit de circulation a été supprimée avec succées");
+            }
+            catch (\Exception $exception)
+            {
+                $this->addFlash("danger", "Impossible de supprimer ce permit de circulation");
+            }
+        }
+        /**
+         * @var $permisCirulation PermisCirculation
+         */
+        return $this->redirectToRoute("vehicule_form_permisCirulations",array(
+            "id"=>$permisCirulation->getVehicule()->getId()
         ));
     }
 }

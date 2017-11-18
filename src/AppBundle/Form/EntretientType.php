@@ -19,6 +19,8 @@ class EntretientType extends AbstractType
                 'widget'=>"single_text"
             ))
             ->add('typeEntretient')
+            ->add('fournisseur')
+            ->add('prix')
             ->add('designation');
     }
     

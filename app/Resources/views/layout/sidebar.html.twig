@@ -13,35 +13,53 @@
         <div class="sidebar-category sidebar-category-visible">
             <div class="category-content no-padding">
                 <ul class="navigation navigation-main navigation-accordion">
-                    <li {% if app.request.get('_route')=="dashbord" %}class="active"{% endif %}>
-                        <a href="{{ path('dashbord') }}"> <i class="icon-home4"></i> <span>Tableau de bord</span></a>
-                    </li>
+                        <li {% if app.request.get('_route')=="dashbord" %}class="active"{% endif %}>
+                            <a href="{{ path('dashbord') }}"> <i class="icon-home4"></i> <span>Tableau de bord</span></a>
+                        </li>
 
-                    <li {% if app.request.getPathInfo|split('/user')|length > 1 %} class="active"{% endif %}>
-                        <a href="{{ path('user_list') }}"><i class="icon-users2"></i> <span>Utilisateurs</span></a>
-                    </li>
-
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <li {% if app.request.getPathInfo|split('/user')|length > 1 %} class="active"{% endif %}>
+                            <a href="{{ path('user_list') }}"><i class="icon-users2"></i> <span>Utilisateurs</span></a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_EXPLOITATION") %}
                     <li {% if app.request.getPathInfo|split('/client')|length > 1 %} class="active"{% endif %}>
                         <a href="{{ path('client_list') }}"><i class="icon-user-tie"></i> <span>Clients</span></a>
                     </li>
+                    {% endif %}
+
+                    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_RESP_TRANSPORT") or is_granted("ROLE_RESPONSABLE_SALAIRE") or is_granted("ROLE_CORDINATOR")  %}
                     <li {% if app.request.getPathInfo|split('/chauffeur')|length > 1 %} class="active"{% endif %}>
                         <a href="{{ path('chauffeur_list') }}"><i class="icon-steering-wheel"></i> <span>Chauffeurs</span></a>
                     </li>
+                    {% endif %}
+
+                    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_RESP_TRANSPORT") or is_granted("ROLE_CORDINATOR") %}
                     <li {% if app.request.getPathInfo|split('/mission')|length > 1 %} class="active"{% endif %}>
                         <a href="{{ path('mission_list') }}"><i class="icon-tab"></i> <span>Missions</span></a>
                     </li>
+                    {% endif %}
+
+                    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_RESP_TRANSPORT") or is_granted("ROLE_CORDINATOR") or is_granted("ROLE_EXPLOITATION") %}
                     <li>
                         <a href=""><i class="icon-truck"></i> <span>Parc</span></a>
                         <ul>
                             <li {% if app.request.getPathInfo|split('/vehicule')|length > 1 %} class="active"{% endif %}>
                                 <a href="{{ path('vehicule_list') }}"><span>Vehicules</span></a>
                             </li>
+                          {% if is_granted("ROLE_RESP_TRANSPORT") or  is_granted("ROLE_EXPLOITATION") %}
                             <li {% if app.request.getPathInfo|split('/remorque')|length > 1 %} class="active"{% endif %}>
                                 <a href="{{ path('remorque_list') }}"><span>Remorques</span></a>
                             </li>
+                          {% endif %}
                         </ul>
                     </li>
-                    <li>
+                    {% endif %}
+
+
+                    {% if is_granted("ROLE_ADMIN")  or is_granted("ROLE_EXPLOITATION") %}
+
+                        <li>
                         <a href=""><i class=" icon-hammer-wrench"></i> <span>Paramétrage</span></a>
                         <ul>
                             <li {% if app.request.getPathInfo|split('/typeEntretient')|length > 1 %} class="active"{% endif %}>
@@ -55,6 +73,8 @@
                             </li>
                         </ul>
                     </li>
+                    {% endif %}
+
                 </ul>
             </div>
         </div>
